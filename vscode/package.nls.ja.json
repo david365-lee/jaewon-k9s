@@ -9,5 +9,6 @@
   "settings.kubectlPath": "コンテキスト一覧の取得に使用する kubectl 実行ファイルのパスです。",
   "settings.k9sPath": "K9s 実行ファイルのパスです。",
   "settings.kubeconfig": "任意の kubeconfig ファイルパスです。空欄の場合は KUBECONFIG とユーザー既定設定を使用します。",
-  "settings.commandTimeout": "kubectl コンテキスト取得と K9s バージョン確認のタイムアウト（ミリ秒）です。"
+  "settings.commandTimeout": "kubectl コンテキスト取得と K9s バージョン確認のタイムアウト（ミリ秒）です。",
+  "settings.windowsConsoleCompatibility": "Windows の従来の16色コンソール出力を任意で使用します。既定は無効（フルカラー）で、新しく開く Windows K9s ターミナルにのみ適用されます。"
 }

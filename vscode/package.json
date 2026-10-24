@@ -2,7 +2,7 @@
   "name": "jaewon-k9s",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "publisher": "jaewon-lee",
   "author": "jaewon",
   "license": "MIT",
@@ -90,6 +90,12 @@
           "maximum": 120000,
           "scope": "machine",
           "description": "%settings.commandTimeout%"
+        },
+        "jaewonK9s.windowsConsoleCompatibility": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "%settings.windowsConsoleCompatibility%"
         }
       }
     },

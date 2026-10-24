@@ -43,4 +43,16 @@ function parseContexts(data) {
     });
 }
 
-module.exports = { isLocalContext, parseContexts };
+function createContextQuickPickItems(contexts, text) {
+  return contexts.map(context => ({
+    label: `${context.local ? '$(device-desktop)' : '$(cloud)'} ${context.name}`,
+    description: [
+      context.local ? text.local : text.remote,
+      context.current ? text.current : context.cluster
+    ].filter(Boolean).join(' · '),
+    detail: context.server || text.noServer,
+    context
+  }));
+}
+
+module.exports = { createContextQuickPickItems, isLocalContext, parseContexts };

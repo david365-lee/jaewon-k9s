@@ -9,5 +9,6 @@
   "settings.kubectlPath": "Path to the kubectl executable used to list contexts.",
   "settings.k9sPath": "Path to the K9s executable.",
   "settings.kubeconfig": "Optional kubeconfig file path. Empty uses KUBECONFIG and the default user config.",
-  "settings.commandTimeout": "Timeout for kubectl context discovery and K9s version checks in milliseconds."
+  "settings.commandTimeout": "Timeout for kubectl context discovery and K9s version checks in milliseconds.",
+  "settings.windowsConsoleCompatibility": "Use optional legacy Windows console output limited to 16 colors. Off by default (full color). Applies only to newly opened Windows K9s terminals."
 }

@@ -8,8 +8,8 @@
 
 ## 주요 기능
 
-- 로컬, 원격/기타, 전체 Kubernetes 컨텍스트 중에서 선택합니다.
-- 호스트 `kubectl`로 컨텍스트를 조회하고, 일반적인 로컬 이름과 loopback API 주소를 로컬로 분류합니다.
+- 단일 검색 선택창에서 로컬·원격 Kubernetes 컨텍스트를 함께 검색하고 선택합니다.
+- 목록에서 로컬/원격 유형, 현재 컨텍스트, 클러스터와 API 주소를 확인할 수 있습니다.
 - 선택한 컨텍스트를 지정해 새 통합 터미널에서 `k9s --context <name>`을 실행합니다.
 - 터미널 확대·축소·초기화 명령을 제공합니다. `terminal.integrated.mouseWheelZoom` 기본값을 활성화해 `Ctrl`+마우스 휠 확대·축소도 지원합니다.
 - `kubectl` 및 K9s 실행 파일 경로, 선택적 kubeconfig 파일, 명령 시간 제한을 설정할 수 있습니다.
@@ -28,11 +28,26 @@
 
 1. 확장을 설치하고 VS Code와 동일한 사용자 환경에서 `kubectl`과 `k9s`가 실행되는지 확인합니다.
 2. 명령 팔레트에서 **Jaewon K9s: Kubernetes 컨텍스트에서 K9s 열기**를 실행하거나 `Ctrl+Alt+K`(macOS는 `Cmd+Alt+K`)를 누릅니다.
-3. **로컬 클러스터**, **원격/기타 컨텍스트**, **모든 컨텍스트 보기** 중 하나를 선택합니다.
-4. 컨텍스트를 선택합니다. 선택한 컨텍스트를 명시해 새 통합 터미널에서 K9s를 실행합니다.
+3. 검색 가능한 목록에서 컨텍스트를 선택합니다. 로컬·원격 구분, 현재 컨텍스트, 클러스터와 API 주소가 항목에 표시됩니다.
+4. 선택한 컨텍스트를 명시해 새 통합 터미널에서 K9s를 실행합니다.
 5. 필요할 때 **Jaewon K9s: 터미널 확대**, **터미널 축소**, **터미널 확대 초기화** 명령을 사용합니다.
 
-컨텍스트 그룹은 필터 편의를 위한 것이며 연결 가능성을 검사하지 않습니다. 원격 클러스터가 연결되지 않을 수 있고, 로컬 클러스터에도 추가 네트워크 설정이 필요할 수 있습니다. 분류가 예상과 다르면 **모든 컨텍스트 보기**를 선택하세요.
+## Windows 테두리·색상 및 명령 입력창
+
+0.1.7은 한국어 Windows 환경에서 확인된 K9s 테두리 누락과 색상 제한 문제를 정리한 릴리스입니다.
+
+- Windows에서 K9s 실행 전에 콘솔 입력·출력을 UTF-8(65001)로 설정합니다.
+- `RUNEWIDTH_EASTASIAN=0`으로 테두리 문자를 VS Code 터미널과 같은 한 칸 폭으로 계산합니다.
+- 전체 색상 출력을 기본으로 사용합니다. 16색 호환 출력은 `jaewonK9s.windowsConsoleCompatibility`를 `true`로 설정할 때만 적용합니다.
+- 변경 사항은 기존 터미널을 종료하고 `Ctrl+Alt+K`로 새로 실행해야 적용됩니다. 다른 확장이나 수동 `k9s` 실행에는 이 확장의 실행 설정이 자동 적용되지 않습니다.
+
+`:` 명령 입력창의 강아지와 `/` 검색창의 푸들 표시는 K9s 기본 아이콘입니다. 숨기려면 `k9s info`로 설정 파일 위치를 확인하고, 기존 `config.yaml`의 `k9s.ui` 아래에 다음 값을 병합한 뒤 K9s를 다시 실행하세요. 다른 설정을 덮어쓰지 마세요. 이 옵션은 K9s 자체 설정이며 확장이 사용자 설정 파일을 자동 수정하지는 않습니다.
+
+```yaml
+k9s:
+  ui:
+    noIcons: true
+```
 
 ## 확대·축소 동작
 
@@ -46,6 +61,7 @@
 | `jaewonK9s.k9sPath` | `k9s` | 통합 터미널에서 실행할 K9s 실행 파일입니다. |
 | `jaewonK9s.kubeconfig` | 비어 있음 | 선택적 kubeconfig 파일입니다. 지정하면 컨텍스트 조회에 사용하고 터미널의 `KUBECONFIG` 환경 변수로 K9s에 전달합니다. 비워 두면 표준 `KUBECONFIG`와 사용자 기본 설정을 사용합니다. |
 | `jaewonK9s.commandTimeout` | `15000` | 컨텍스트 조회와 K9s 버전 확인 제한 시간(밀리초, 1,000~120,000)입니다. |
+| `jaewonK9s.windowsConsoleCompatibility` | `false` | Windows에서만 사용하는 선택적 16색 호환 출력입니다. 기본값은 전체 색상이며 새 K9s 터미널에 적용됩니다. |
 
 ## 개인정보 및 보안
 
@@ -61,27 +77,25 @@ npm test
 npm run package
 ```
 
-패키징 명령은 `jaewon-k9s-0.1.2.vsix`를 생성합니다. 로컬 설치 명령:
+패키징 명령은 `jaewon-k9s-0.1.7.vsix`를 생성합니다. 로컬 설치 명령:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.2.vsix
+code --install-extension jaewon-k9s-0.1.7.vsix
 ```
 
 VS Code 패키지 아이콘은 투명 배경의 128×128 PNG인 [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png)입니다. 편집 가능한 벡터 원본은 [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg)이며, 같은 PNG를 Marketplace 확장 목록에도 사용할 수 있습니다.
 
-## Marketplace 게시 준비
+## Marketplace 업데이트
 
-**실제 게시 작업은 아직 수행하지 않았습니다.** 게시 전 다음 사항을 확인하세요.
+Marketplace에 공개된 확장은 게시자 관리 포털에서 업데이트할 수 있습니다.
 
-1. Marketplace 게시자 ID `jaewon-lee`가 프로젝트 관리자 소유인지 확인하고, Visual Studio Marketplace 관리 포털에서 게시자를 생성하거나 검증합니다.
-2. manifest, 현지화된 이름과 설명, 아이콘, 번역 README 및 `docs/marketplace-description.<locale>.md`의 해당 언어별 상세 설명을 검토합니다.
-3. 위 절차에 따라 VSIX를 빌드하고 테스트합니다. 출력 파일명을 지정하려면 `npx @vscode/vsce package --out jaewon-k9s-0.1.2.vsix`를 사용합니다.
-4. 필요한 최소 권한인 **Marketplace (Manage)** 범위의 Personal Access Token을 만들고 안전하게 보관합니다. 저장소에 커밋하거나 프로젝트 설정에 넣지 마세요.
-5. 아래 보안 유의사항을 해결하고 전체 의존성 감사를 통과한 뒤 `npx @vscode/vsce login jaewon-lee`로 인증합니다. 프로젝트 관리자가 버전과 목록 내용을 확인한 후에만 `npx @vscode/vsce publish`를 실행합니다.
+1. manifest, 현지화된 이름과 설명, 아이콘, 번역 README 및 `docs/marketplace-description.<locale>.md`를 검토합니다.
+2. VSIX를 빌드하고 테스트합니다. 필요하면 `npx @vscode/vsce package --out jaewon-k9s-0.1.7.vsix`로 출력 파일명을 지정합니다.
+3. Visual Studio Marketplace의 게시자 관리 페이지에서 **Jaewon K9s → More Actions → Update**를 선택한 뒤 VSIX를 업로드합니다.
 
-아이콘과 현지화된 확장 메타데이터는 manifest와 패키지에 포함되어 있습니다. Marketplace 게시 자체는 관리자 확인 후 수동으로 수행하도록 남겨 두었습니다.
+새 확장을 등록하는 대신 기존 `jaewon-k9s` 항목을 업데이트해야 합니다. 아이콘과 현지화된 확장 메타데이터는 manifest와 패키지에 포함됩니다.
 
-**보안 유의사항:** 현재 전체 `npm audit`에서 VSCE의 개발용 전이 의존성인 `@azure/msal-node`에 높은 심각도의 권고([GHSA-xcx6-jx8p-x3h5](https://github.com/advisories/GHSA-xcx6-jx8p-x3h5))가 보고됩니다. 이 도구는 VSIX에 포함되지 않으며 `npm audit --omit=dev` 결과는 취약점 0건이고 VSIX 패키징도 확인했습니다. 다만 게시자 인증에 영향을 줄 수 있으므로, 호환되는 상위 수정 버전이 제공되어 전체 감사가 통과하기 전까지 `vsce login` 또는 `vsce publish`를 실행하지 마세요.
+**보안 유의사항:** VSCE의 개발용 전이 의존성인 `@azure/msal-node`에 높은 심각도의 권고([GHSA-xcx6-jx8p-x3h5](https://github.com/advisories/GHSA-xcx6-jx8p-x3h5))가 보고된 적이 있습니다. 이 도구는 VSIX에 포함되지 않습니다. 게시용 PAT를 저장소나 프로젝트 설정에 넣지 말고, 호환되는 상위 수정 버전과 전체 감사 결과를 확인하기 전에는 VSCE CLI 로그인을 사용하지 마세요. 승인된 Marketplace 브라우저 세션에서 기존 확장 업데이트를 수행할 수 있습니다.
 
 ## 라이선스 및 저작자
 

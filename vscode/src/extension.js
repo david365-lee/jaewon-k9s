@@ -2,76 +2,53 @@
 
 const vscode = require('vscode');
 const { execFile } = require('node:child_process');
-const { parseContexts } = require('./context');
+const { createContextQuickPickItems, parseContexts } = require('./context');
+const { terminalEnvironment, terminalLaunch } = require('./terminal');
 
 const messages = {
   en: {
-    local: '$(device-desktop) Local cluster',
-    localDescription: 'Docker Desktop, Kind, Minikube, localhost API endpoints',
-    remote: '$(cloud) Remote / other context',
-    remoteDescription: 'Contexts from the host kubeconfig that are not classified as local',
-    all: '$(list-unordered) Show all contexts',
-    allDescription: 'Choose any context without local/remote filtering',
-    mode: 'Choose a local or remote Kubernetes context type',
-    context: 'Select a Kubernetes context',
+    local: 'Local',
+    remote: 'Remote',
+    context: 'Search local or remote Kubernetes contexts',
     current: 'current context',
+    noServer: 'API server not declared',
     noContexts: 'No Kubernetes contexts were found. Configure kubectl or set jaewonK9s.kubeconfig.',
-    emptyLocal: 'No local contexts were detected. Choose “Show all contexts” or update your kubeconfig.',
-    emptyRemote: 'No remote contexts were detected. Choose “Show all contexts” or update your kubeconfig.',
     readError: 'Unable to read Kubernetes contexts',
     k9sError: 'K9s could not be started from',
     installK9s: 'Install K9s or set jaewonK9s.k9sPath.',
     zoomError: 'Open a K9s terminal before using terminal zoom commands.'
   },
   ko: {
-    local: '$(device-desktop) 로컬 클러스터',
-    localDescription: 'Docker Desktop, Kind, Minikube, localhost API 주소',
-    remote: '$(cloud) 원격 / 기타 컨텍스트',
-    remoteDescription: '로컬로 분류되지 않은 호스트 kubeconfig 컨텍스트',
-    all: '$(list-unordered) 모든 컨텍스트 보기',
-    allDescription: '로컬/원격 구분 없이 컨텍스트 선택',
-    mode: '로컬 또는 원격 Kubernetes 컨텍스트 유형을 선택하세요',
-    context: 'Kubernetes 컨텍스트 선택',
+    local: '로컬',
+    remote: '원격',
+    context: '로컬·원격 Kubernetes 컨텍스트 검색',
     current: '현재 컨텍스트',
+    noServer: 'API 서버 주소 없음',
     noContexts: 'Kubernetes 컨텍스트가 없습니다. kubectl을 구성하거나 jaewonK9s.kubeconfig를 설정하세요.',
-    emptyLocal: '로컬 컨텍스트가 없습니다. 모든 컨텍스트를 보거나 kubeconfig를 확인하세요.',
-    emptyRemote: '원격 컨텍스트가 없습니다. 모든 컨텍스트를 보거나 kubeconfig를 확인하세요.',
     readError: 'Kubernetes 컨텍스트를 읽을 수 없습니다',
     k9sError: 'K9s를 시작할 수 없습니다:',
     installK9s: 'K9s를 설치하거나 jaewonK9s.k9sPath를 설정하세요.',
     zoomError: '터미널 확대/축소 명령을 사용하기 전에 K9s 터미널을 여세요.'
   },
   ja: {
-    local: '$(device-desktop) ローカルクラスター',
-    localDescription: 'Docker Desktop、Kind、Minikube、localhost API アドレス',
-    remote: '$(cloud) リモート / その他のコンテキスト',
-    remoteDescription: 'ローカルに分類されないホスト kubeconfig のコンテキスト',
-    all: '$(list-unordered) すべてのコンテキストを表示',
-    allDescription: 'ローカル/リモートで絞り込まずに選択',
-    mode: 'ローカルまたはリモートの Kubernetes コンテキストを選択',
-    context: 'Kubernetes コンテキストを選択',
+    local: 'ローカル',
+    remote: 'リモート',
+    context: 'ローカル・リモート Kubernetes コンテキストを検索',
     current: '現在のコンテキスト',
+    noServer: 'API サーバーが未指定',
     noContexts: 'Kubernetes コンテキストがありません。kubectl または jaewonK9s.kubeconfig を設定してください。',
-    emptyLocal: 'ローカルコンテキストがありません。すべてのコンテキストを表示するか kubeconfig を確認してください。',
-    emptyRemote: 'リモートコンテキストがありません。すべてのコンテキストを表示するか kubeconfig を確認してください。',
     readError: 'Kubernetes コンテキストを読み込めません',
     k9sError: 'K9s を起動できません:',
     installK9s: 'K9s をインストールするか jaewonK9s.k9sPath を設定してください。',
     zoomError: 'ターミナルのズームコマンドを使う前に K9s ターミナルを開いてください。'
   },
   'zh-cn': {
-    local: '$(device-desktop) 本地集群',
-    localDescription: 'Docker Desktop、Kind、Minikube、localhost API 地址',
-    remote: '$(cloud) 远程 / 其他上下文',
-    remoteDescription: '主机 kubeconfig 中未归类为本地的上下文',
-    all: '$(list-unordered) 显示所有上下文',
-    allDescription: '不按本地/远程筛选，选择任意上下文',
-    mode: '选择本地或远程 Kubernetes 上下文类型',
-    context: '选择 Kubernetes 上下文',
+    local: '本地',
+    remote: '远程',
+    context: '搜索本地或远程 Kubernetes 上下文',
     current: '当前上下文',
+    noServer: '未声明 API 服务器',
     noContexts: '未找到 Kubernetes 上下文。请配置 kubectl 或 jaewonK9s.kubeconfig。',
-    emptyLocal: '未检测到本地上下文。请显示所有上下文或检查 kubeconfig。',
-    emptyRemote: '未检测到远程上下文。请显示所有上下文或检查 kubeconfig。',
     readError: '无法读取 Kubernetes 上下文',
     k9sError: '无法从以下路径启动 K9s：',
     installK9s: '请安装 K9s 或设置 jaewonK9s.k9sPath。',
@@ -124,22 +101,11 @@ async function openK9s() {
   }
   if (contexts.length === 0) throw new Error(text.noContexts);
 
-  const mode = await vscode.window.showQuickPick([
-    { label: text.local, description: text.localDescription, value: 'local' },
-    { label: text.remote, description: text.remoteDescription, value: 'remote' },
-    { label: text.all, description: text.allDescription, value: 'all' }
-  ], { placeHolder: text.mode });
-  if (!mode) return;
-
-  const filtered = mode.value === 'all' ? contexts : contexts.filter(context => context.local === (mode.value === 'local'));
-  if (filtered.length === 0) throw new Error(mode.value === 'local' ? text.emptyLocal : text.emptyRemote);
-
-  const selected = await vscode.window.showQuickPick(filtered.map(context => ({
-    label: context.name,
-    description: context.current ? text.current : context.cluster,
-    detail: context.server || 'API server not declared',
-    context
-  })), { placeHolder: text.context });
+  const selected = await vscode.window.showQuickPick(createContextQuickPickItems(contexts, text), {
+    placeHolder: text.context,
+    matchOnDescription: true,
+    matchOnDetail: true
+  });
   if (!selected) return;
 
   const k9sPath = config.get('k9sPath', 'k9s');
@@ -152,9 +118,8 @@ async function openK9s() {
   const kubeconfig = config.get('kubeconfig', '').trim();
   const terminal = vscode.window.createTerminal({
     name: `Jaewon K9s: ${selected.context.name}`,
-    shellPath: k9sPath,
-    shellArgs: ['--context', selected.context.name],
-    env: kubeconfig ? { KUBECONFIG: kubeconfig } : undefined
+    ...terminalLaunch(process.platform, k9sPath, selected.context.name),
+    env: terminalEnvironment(process.platform, config.get('windowsConsoleCompatibility', false), kubeconfig)
   });
   terminal.show();
 }

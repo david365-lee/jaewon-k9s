@@ -8,8 +8,8 @@
 
 ## 主な機能
 
-- ローカル、リモート/その他、またはすべての Kubernetes コンテキストを選択できます。
-- ホストの `kubectl` でコンテキストを検出し、一般的なローカル名とループバック API アドレスをローカルとして分類します。
+- ローカルとリモートの Kubernetes コンテキストを1つの一覧から検索・選択できます。
+- 一覧にはローカル/リモートの種別、現在のコンテキスト、クラスター、API アドレスが表示されます。
 - 選択したコンテキストを指定して、新しい統合ターミナルで `k9s --context <name>` を起動します。
 - ターミナルの拡大、縮小、リセットコマンドを提供します。`terminal.integrated.mouseWheelZoom` により `Ctrl` + マウスホイールも既定で有効です。
 - `kubectl` と K9s の実行ファイル、任意の kubeconfig、コマンドのタイムアウトを設定できます。
@@ -28,11 +28,26 @@ K9s と kubectl は拡張機能に同梱されません。リモートクラス�
 
 1. 拡張機能をインストールし、VS Code と同じユーザー環境で `kubectl` と `k9s` が動作することを確認します。
 2. コマンドパレットで **Jaewon K9s: Open K9s for a Kubernetes Context** を実行するか、`Ctrl+Alt+K`（macOS は `Cmd+Alt+K`）を押します。
-3. **Local cluster**、**Remote / other context**、または **Show all contexts** を選びます。
-4. コンテキストを選択します。選択したコンテキストを明示して、新しい統合ターミナルで K9s が開きます。
+3. 検索可能な一覧からコンテキストを選択します。各項目にローカル/リモートの種別、現在のコンテキスト、クラスター、API アドレスが表示されます。
+4. 選択したコンテキストを明示して、新しい統合ターミナルで K9s が開きます。
 5. 必要に応じて **Jaewon K9s: Increase Terminal Zoom**、**Decrease Terminal Zoom**、**Reset Terminal Zoom** を実行します。
 
-コンテキストの分類は接続確認ではありません。リモートに接続できない場合や、ローカルにも追加のネットワーク設定が必要な場合があります。分類が合わないときは **Show all contexts** を選択してください。
+## Windows の罫線・色と入力欄のアイコン
+
+0.1.7 は韓国語 Windows で確認された K9s の罫線欠落と色数制限への修正をまとめたリリースです。
+
+- Windows で K9s を起動する前に、コンソールの入出力を UTF-8（65001）に設定します。
+- `RUNEWIDTH_EASTASIAN=0` により罫線文字を VS Code ターミナルと同じ1セル幅として扱います。
+- 既定でフルカラーを使用します。従来の16色出力が必要な場合のみ `jaewonK9s.windowsConsoleCompatibility` を `true` にします。
+- 既存の K9s ターミナルを終了し、`Ctrl+Alt+K` から新しく起動してください。他の拡張機能や手動起動の `k9s` には、この起動設定は自動適用されません。
+
+`:` のコマンド入力欄に表示される犬と `/` の検索欄のプードルは K9s 標準のアイコンです。非表示にするには `k9s info` で設定ファイルの場所を確認し、既存の `config.yaml` の `k9s.ui` に次の値を追加して K9s を再起動します。他の設定は保持してください。これは K9s 自体の設定であり、拡張機能はユーザーの設定ファイルを自動変更しません。
+
+```yaml
+k9s:
+  ui:
+    noIcons: true
+```
 
 ## ズーム動作
 
@@ -46,6 +61,7 @@ K9s と kubectl は拡張機能に同梱されません。リモートクラス�
 | `jaewonK9s.k9sPath` | `k9s` | 統合ターミナルで起動する K9s 実行ファイル。 |
 | `jaewonK9s.kubeconfig` | 空 | 任意の kubeconfig ファイル。設定するとコンテキスト検出に使用し、ターミナルの `KUBECONFIG` 環境変数として K9s に渡します。空欄の場合は標準の `KUBECONFIG` とユーザー既定設定を使用します。 |
 | `jaewonK9s.commandTimeout` | `15000` | コンテキスト検出と K9s バージョン確認のタイムアウト（ミリ秒、1,000～120,000）。 |
+| `jaewonK9s.windowsConsoleCompatibility` | `false` | Windows 専用の任意の16色互換出力。既定はフルカラーで、新しい K9s ターミナルに適用されます。 |
 
 ## プライバシーとセキュリティ
 
@@ -61,27 +77,25 @@ npm test
 npm run package
 ```
 
-`jaewon-k9s-0.1.2.vsix` が作成されます。次のコマンドでローカルにインストールできます。
+`jaewon-k9s-0.1.7.vsix` が作成されます。次のコマンドでローカルにインストールできます。
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.2.vsix
+code --install-extension jaewon-k9s-0.1.7.vsix
 ```
 
 VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png) です。編集用ベクターソースは [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) で、同じ PNG を拡張機能の Marketplace 掲載画像にも使用できます。
 
-## Marketplace 公開の準備
+## Marketplace の更新
 
-**公開はまだ実施していません。** 公開前に以下を確認してください。
+既存の Marketplace 掲載を発行者管理ページから更新します。
 
-1. Marketplace の発行者 ID `jaewon-lee` がプロジェクト管理者のものか確認し、Visual Studio Marketplace 管理ポータルで発行者を作成または確認します。
-2. manifest、各言語のメタデータ、アイコン、翻訳 README、および `docs/marketplace-description.<locale>.md` の該当言語の説明を確認します。
-3. 上記の手順で VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.2.vsix` を実行します。
-4. Marketplace の Personal Access Token は必要最小限の **Marketplace (Manage)** スコープで作成して安全に保管します。リポジトリや設定に保存しないでください。
-5. 以下のセキュリティ注意事項を解消し、依存関係全体の監査に合格してから `npx @vscode/vsce login jaewon-lee` で認証します。管理者がバージョンと掲載内容を確認した後にのみ `npx @vscode/vsce publish` を実行してください。
+1. manifest、各言語のメタデータ、アイコン、翻訳 README、および `docs/marketplace-description.<locale>.md` を確認します。
+2. VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.7.vsix` を実行します。
+3. Visual Studio Marketplace 発行者管理ページで **Jaewon K9s → More Actions → Update** を選び、VSIX をアップロードします。
 
-アイコンとローカライズされた拡張メタデータは manifest とパッケージに含めています。Marketplace への公開は管理者による明示的な操作として残しています。
+新しい拡張を作成せず、既存の `jaewon-k9s` 掲載を更新してください。アイコンとローカライズされた拡張メタデータは manifest とパッケージに含まれます。
 
-**セキュリティ注意事項:** 現在の `npm audit` では、VSCE の開発用間接依存である `@azure/msal-node` に重大度 high の勧告が報告されています（[GHSA-xcx6-jx8p-x3h5](https://github.com/advisories/GHSA-xcx6-jx8p-x3h5)）。このツールは VSIX に含まれず、`npm audit --omit=dev` は脆弱性 0 件で、VSIX のパッケージ作成も確認済みです。ただし発行者認証に影響する可能性があるため、互換性のある上流修正版が提供され、全体監査に合格するまで `vsce login` または `vsce publish` を実行しないでください。
+**セキュリティ注意事項:** VSCE の開発用間接依存 `@azure/msal-node` には重大度 high の勧告が報告されたことがあります（[GHSA-xcx6-jx8p-x3h5](https://github.com/advisories/GHSA-xcx6-jx8p-x3h5)）。このツールは VSIX に含まれません。公開用 PAT をリポジトリや設定に保存せず、互換性のある上流修正と全体監査を確認するまでは VSCE CLI ログインを避けてください。承認済み Marketplace ブラウザーセッションから既存拡張を更新できます。
 
 ## ライセンスとクレジット
 

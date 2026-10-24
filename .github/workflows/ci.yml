@@ -10,6 +10,25 @@ permissions:
   contents: read
 
 jobs:
+  vscode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: vscode/package-lock.json
+      - name: Install VS Code extension dependencies
+        working-directory: vscode
+        run: npm ci
+      - name: Test VS Code extension
+        working-directory: vscode
+        run: npm test
+      - name: Package VS Code extension
+        working-directory: vscode
+        run: npm run package
+
   test:
     runs-on: ubuntu-latest
     steps:

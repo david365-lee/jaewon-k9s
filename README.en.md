@@ -8,6 +8,8 @@
 
 Alongside the Docker Desktop extension, a separate VS Code extension runs local and remote contexts in the integrated terminal using the host's `kubectl` and K9s. See the [VS Code extension README](vscode/README.en.md) for requirements, commands, configuration, zoom behavior, and Marketplace preparation. [한국어](vscode/README.md) · [日本語](vscode/README.ja.md) · [简体中文](vscode/README.zh-CN.md)
 
+VS Code **0.1.7** fixes missing borders on Korean Windows using UTF-8 and explicit character widths, and enables full colors by default. See the [VS Code guide](vscode/README.en.md) for prompt icon settings.
+
 ## Features
 
 | Feature | Description |

@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.1.7 — 2026-10-24
+
+- Consolidate Windows rendering fixes: initialize UTF-8 before K9s, enforce single-cell ambiguous characters, and use full-color output by default.
+- Keep legacy 16-color console output optional and clarify that changes apply to newly launched terminals.
+- Document K9s prompt icons and the native `k9s.ui.noIcons: true` option without modifying user configuration automatically.
+- Update Korean, English, Japanese, and Simplified Chinese READMEs, Marketplace descriptions, and settings translations.
+- Preserve the unified searchable context picker with type, current context, cluster, and API endpoint details.
+
+Validation: 8 automated tests; Korean Windows user confirmed borders and prompt display after applying the documented K9s configuration.
+
+## 0.1.6
+
+- Explicitly use narrow ambiguous-character widths on Windows (`RUNEWIDTH_EASTASIAN=0`) to match VS Code's terminal grid, independently of the inherited console code page.
+
+## 0.1.5
+
+- Set the Windows console input and output code pages to UTF-8 before starting K9s, preventing CP949 box-drawing width mismatches.
+- Restore full-color output by default; legacy 16-color console compatibility remains optional.
+
+## 0.1.4
+
+- Enable Windows console compatibility output for new K9s terminals to work around VT rendering corruption.
+- Add a setting to opt out and restore full-color output. Other platforms are unchanged.
+
+## 0.1.3
+
+- Replace the two-step context-type and context selection with one searchable picker.
+- Show local/remote type, current-context status, cluster, and API endpoint in each picker item.
+- Update the multilingual usage and Marketplace update documentation.
+
 ## 0.1.2
 
 - Fix Marketplace README links by pointing language guides, icon files, and license details to stable GitHub URLs.

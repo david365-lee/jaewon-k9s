@@ -8,8 +8,8 @@ Improved and distributed for free by **jaewon**, a developer from South Korea.
 
 ## Features
 
-- Choose local, remote/other, or all Kubernetes contexts.
-- Discover contexts with host `kubectl`; common local context names and loopback API endpoints are grouped as local.
+- Search and choose local or remote Kubernetes contexts from one picker.
+- Review each context's local/remote type, current-context status, cluster, and API endpoint in the list.
 - Launch the selected context in a new integrated terminal with `k9s --context <name>`.
 - Use dedicated terminal zoom-in, zoom-out, and reset commands. `Ctrl` + mouse-wheel zoom is enabled by default through `terminal.integrated.mouseWheelZoom`.
 - Configure executable paths for `kubectl` and K9s, an optional kubeconfig file, and the command timeout.
@@ -28,11 +28,26 @@ The extension does not bundle K9s or kubectl. Remote clusters require working ne
 
 1. Install the extension and verify that `kubectl` and `k9s` work in the same user environment as VS Code.
 2. Run **Jaewon K9s: Open K9s for a Kubernetes Context** from the Command Palette, or press `Ctrl+Alt+K` (`Cmd+Alt+K` on macOS).
-3. Choose **Local cluster**, **Remote / other context**, or **Show all contexts**.
-4. Select a context. K9s opens in a new integrated terminal with that context explicitly selected.
+3. Search the combined list and select a context. Each item shows its local/remote type, current-context status, cluster, and API endpoint.
+4. K9s opens in a new integrated terminal with that context explicitly selected.
 5. Run **Jaewon K9s: Increase Terminal Zoom**, **Decrease Terminal Zoom**, or **Reset Terminal Zoom** when needed.
 
-Context groups are a convenience, not a connectivity test. A remote cluster may be unreachable, and a local context may need extra networking. Choose **Show all contexts** if a context is grouped unexpectedly.
+## Windows borders, colors, and prompt icons
+
+Version 0.1.7 consolidates the fixes verified on Korean Windows for missing K9s borders and restricted colors.
+
+- Set console input and output to UTF-8 (65001) before starting K9s on Windows.
+- Set `RUNEWIDTH_EASTASIAN=0` so ambiguous border characters occupy one cell, matching the VS Code terminal.
+- Use full-color output by default. Enable `jaewonK9s.windowsConsoleCompatibility` only when optional legacy 16-color output is needed.
+- Close existing K9s terminals and launch a new one with `Ctrl+Alt+K`. These launch settings do not automatically apply to other extensions or manually started `k9s` sessions.
+
+The dog shown in the `:` command prompt and the poodle in the `/` search prompt are built-in K9s icons. To hide them, use `k9s info` to locate the configuration file, merge the following value under `k9s.ui` in the existing `config.yaml`, and restart K9s. Preserve the other settings. This is a K9s option; the extension does not automatically edit your K9s configuration.
+
+```yaml
+k9s:
+  ui:
+    noIcons: true
+```
 
 ## Zoom behavior
 
@@ -46,6 +61,7 @@ The zoom commands invoke VS Code's built-in integrated-terminal font zoom action
 | `jaewonK9s.k9sPath` | `k9s` | K9s executable launched in the integrated terminal. |
 | `jaewonK9s.kubeconfig` | empty | Optional kubeconfig file. When set, it is used for context discovery and passed to K9s as the terminal's `KUBECONFIG` environment variable. When empty, standard `KUBECONFIG` and user-default behavior applies. |
 | `jaewonK9s.commandTimeout` | `15000` | Timeout in milliseconds for context discovery and K9s version check (1,000–120,000). |
+| `jaewonK9s.windowsConsoleCompatibility` | `false` | Optional Windows-only legacy 16-color output. Full color is the default; changes apply to new K9s terminals. |
 
 ## Privacy and security
 
@@ -61,27 +77,25 @@ npm test
 npm run package
 ```
 
-The package command creates `jaewon-k9s-0.1.2.vsix`. Install it locally with:
+The package command creates `jaewon-k9s-0.1.7.vsix`. Install it locally with:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.2.vsix
+code --install-extension jaewon-k9s-0.1.7.vsix
 ```
 
 The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png); [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) is its editable vector source. The same PNG can be used in the publisher's extension listing.
 
-## Marketplace publishing preparation
+## Marketplace updates
 
-Publishing has **not** been performed. Before publishing:
+Update the existing Marketplace listing through the publisher management page:
 
-1. Verify that publisher ID `jaewon-lee` belongs to the project maintainer; create or verify the publisher in the Visual Studio Marketplace management portal.
-2. Review the manifest, localized metadata, icon, translated READMEs, and the matching detailed listing in `docs/marketplace-description.<locale>.md`.
-3. Build and test the VSIX as above. To set the artifact name explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.2.vsix`.
-4. Create a Marketplace Personal Access Token with the minimum required **Marketplace (Manage)** scope. Store it securely; never commit it or add it to project settings.
-5. First resolve the security note below and pass a full dependency audit. Then authenticate with `npx @vscode/vsce login jaewon-lee`; publish with `npx @vscode/vsce publish` only after the project owner confirms the version and listing.
+1. Review the manifest, localized metadata, icon, translated READMEs, and `docs/marketplace-description.<locale>.md`.
+2. Build and test the VSIX. To set its filename explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.7.vsix`.
+3. In Visual Studio Marketplace publisher management, select **Jaewon K9s → More Actions → Update**, then upload the VSIX.
 
-The manifest and package include the icon and localized extension metadata. Marketplace publishing remains a deliberate manual action.
+Update the existing `jaewon-k9s` listing rather than creating a new extension. The manifest and package include the icon and localized extension metadata.
 
-**Security note:** The current full `npm audit` reports a high-severity advisory for `@azure/msal-node`, a transitive development dependency of VSCE ([GHSA-xcx6-jx8p-x3h5](https://github.com/advisories/GHSA-xcx6-jx8p-x3h5)). This tool is not included in the VSIX; `npm audit --omit=dev` reports zero vulnerabilities, and VSIX packaging was verified. Because the advisory may affect publisher authentication, do not run `vsce login` or `vsce publish` until a compatible upstream fix is available and the full audit passes.
+**Security note:** A high-severity advisory has been reported for `@azure/msal-node`, a transitive development dependency of VSCE ([GHSA-xcx6-jx8p-x3h5](https://github.com/advisories/GHSA-xcx6-jx8p-x3h5)). It is not included in the VSIX. Do not store a publishing PAT in the repository or project settings, and avoid VSCE CLI login until a compatible upstream fix and full audit are confirmed. An approved Marketplace browser session can be used to update the existing extension.
 
 ## License and attribution
 

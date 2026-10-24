@@ -16,6 +16,8 @@
 | localhost 接続 | 拡張機能用のコピーに限り `localhost`、`127.0.0.1`、`::1` を `host.docker.internal` に置き換え、TLS サーバー名の検証を維持します。 |
 | 認証に関する注意 | `exec` プラグイン、ホストの token ファイル、プロキシなど、コンテナ内で追加設定が必要な構成を案内します。 |
 
+VS Code **0.1.7** は韓国語 Windows の罫線欠落を UTF-8 と文字幅の明示設定で修正し、既定でフルカラー出力を有効にします。入力欄アイコンの設定は [VS Code ガイド](vscode/README.ja.md) を参照してください。
+
 ## REA による分析
 
 提供された Docker Desktop k9s 拡張機能の React UI を REA で静的分析しました。既存 UI はホスト `kubectl` から固定の `docker-desktop` コンテキストを読み込み、拡張 VM サービスに送信して、`http://localhost:35781` のターミナルを iframe で表示します。分析対象のソースではコンテキスト選択と UI ズーム操作を確認できませんでした。

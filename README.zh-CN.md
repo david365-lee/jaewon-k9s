@@ -16,6 +16,8 @@
 | 本地 API 路由 | 仅在扩展副本中将 `localhost`、`127.0.0.1`、`::1` 改为 `host.docker.internal`，并保留 TLS 服务器名称验证。 |
 | 认证提示 | 提示需要在容器中额外配置的 `exec` 插件、主机 token 文件或代理等。 |
 
+VS Code **0.1.7** 通过 UTF-8 与显式字符宽度修复韩语 Windows 上的边框缺失，并默认启用全彩输出。输入提示图标设置请参阅 [VS Code 指南](vscode/README.zh-CN.md)。
+
 ## REA 分析
 
 我们使用 REA 对提供的 Docker Desktop k9s 扩展 React UI 进行了静态分析。原 UI 通过主机 `kubectl` 读取固定的 `docker-desktop` 上下文，将 kubeconfig 发送给扩展 VM 服务，并通过 iframe 显示 `http://localhost:35781` 终端。在所选分析源码中未发现上下文选择和 UI 缩放控制。

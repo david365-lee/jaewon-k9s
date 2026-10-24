@@ -9,5 +9,6 @@
   "settings.kubectlPath": "用于列出上下文的 kubectl 可执行文件路径。",
   "settings.k9sPath": "K9s 可执行文件路径。",
   "settings.kubeconfig": "可选的 kubeconfig 文件路径。留空时使用 KUBECONFIG 和用户默认配置。",
-  "settings.commandTimeout": "kubectl 上下文发现和 K9s 版本检查超时时间（毫秒）。"
+  "settings.commandTimeout": "kubectl 上下文发现和 K9s 版本检查超时时间（毫秒）。",
+  "settings.windowsConsoleCompatibility": "可选用 Windows 旧式16色控制台输出。默认关闭（全彩），仅适用于新打开的 Windows K9s 终端。"
 }

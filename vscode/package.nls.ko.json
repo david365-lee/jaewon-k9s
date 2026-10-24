@@ -9,5 +9,6 @@
   "settings.kubectlPath": "컨텍스트 목록 조회에 사용할 kubectl 실행 파일 경로입니다.",
   "settings.k9sPath": "K9s 실행 파일 경로입니다.",
   "settings.kubeconfig": "선택적 kubeconfig 파일 경로입니다. 비워 두면 KUBECONFIG와 사용자 기본 설정을 사용합니다.",
-  "settings.commandTimeout": "kubectl 컨텍스트 조회와 K9s 버전 확인 제한 시간(밀리초)입니다."
+  "settings.commandTimeout": "kubectl 컨텍스트 조회와 K9s 버전 확인 제한 시간(밀리초)입니다.",
+  "settings.windowsConsoleCompatibility": "Windows에서 선택적 16색 콘솔 호환 출력을 사용합니다. 기본값은 꺼짐(전체 색상)이며 새로 여는 K9s 터미널에만 적용됩니다."
 }

@@ -8,6 +8,8 @@
 
 Docker Desktop판과 별도로, 호스트의 `kubectl` 및 K9s를 사용해 VS Code 통합 터미널에서 로컬·원격 컨텍스트를 실행하는 확장도 제공합니다. 설치 요구 사항과 명령, 설정, 확대·축소, VS Code Marketplace 게시 준비 절차는 [VS Code 확장 README](vscode/README.md)를 참고하세요. [English](vscode/README.en.md) · [日本語](vscode/README.ja.md) · [简体中文](vscode/README.zh-CN.md)
 
+VS Code **0.1.7**은 한국어 Windows의 테두리 누락을 UTF-8과 문자 폭 설정으로 해결하고 전체 색상 출력을 기본으로 제공합니다. 명령 입력창 아이콘을 숨기는 방법은 [Windows 표시 설정 안내](vscode/README.md)를 참고하세요.
+
 ## 주요 기능
 
 | 기능 | 설명 |
