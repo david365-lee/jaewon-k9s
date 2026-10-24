@@ -2,7 +2,7 @@
 
 **Jaewon K9s** is a free VS Code extension that launches locally installed K9s in the integrated terminal. Select a local or remote Kubernetes context first. This is a separate product from the Docker Desktop extension in the parent directory.
 
-[한국어](README.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [Marketplace listing description](docs/marketplace-description.en.md)
+[한국어](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/README.md) · [日本語](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/README.ja.md) · [简体中文](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/README.zh-CN.md) · [Marketplace listing description](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/docs/marketplace-description.en.md)
 
 Improved and distributed for free by **jaewon**, a developer from South Korea.
 
@@ -61,13 +61,13 @@ npm test
 npm run package
 ```
 
-The package command creates `jaewon-k9s-0.1.1.vsix`. Install it locally with:
+The package command creates `jaewon-k9s-0.1.2.vsix`. Install it locally with:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.1.vsix
+code --install-extension jaewon-k9s-0.1.2.vsix
 ```
 
-The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](icon.png); [`icon.svg`](icon.svg) is its editable vector source. The same PNG can be used in the publisher's extension listing.
+The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png); [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) is its editable vector source. The same PNG can be used in the publisher's extension listing.
 
 ## Marketplace publishing preparation
 
@@ -75,7 +75,7 @@ Publishing has **not** been performed. Before publishing:
 
 1. Verify that publisher ID `jaewon-lee` belongs to the project maintainer; create or verify the publisher in the Visual Studio Marketplace management portal.
 2. Review the manifest, localized metadata, icon, translated READMEs, and the matching detailed listing in `docs/marketplace-description.<locale>.md`.
-3. Build and test the VSIX as above. To set the artifact name explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.1.vsix`.
+3. Build and test the VSIX as above. To set the artifact name explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.2.vsix`.
 4. Create a Marketplace Personal Access Token with the minimum required **Marketplace (Manage)** scope. Store it securely; never commit it or add it to project settings.
 5. First resolve the security note below and pass a full dependency audit. Then authenticate with `npx @vscode/vsce login jaewon-lee`; publish with `npx @vscode/vsce publish` only after the project owner confirms the version and listing.
 
@@ -85,4 +85,4 @@ The manifest and package include the icon and localized extension metadata. Mark
 
 ## License and attribution
 
-The extension source is available under the [MIT License](LICENSE). Improved and distributed for free by **jaewon**, a developer from South Korea. K9s and Kubernetes are separate projects and retain their respective names, trademarks, and licenses; their software is not bundled with this extension.
+The extension source is available under the [MIT License](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/LICENSE). Improved and distributed for free by **jaewon**, a developer from South Korea. K9s and Kubernetes are separate projects and retain their respective names, trademarks, and licenses; their software is not bundled with this extension.

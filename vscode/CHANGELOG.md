@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Fix Marketplace README links by pointing language guides, icon files, and license details to stable GitHub URLs.
+
 ## 0.1.1
 
 - Refresh the extension icon with a transparent background and clear lowercase `k9s` wordmark.

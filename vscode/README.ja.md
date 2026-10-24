@@ -2,7 +2,7 @@
 
 **Jaewon K9s** は、ローカルにインストールされた K9s を VS Code の統合ターミナルで起動する無料拡張機能です。起動前にローカルまたはリモートの Kubernetes コンテキストを選択できます。親ディレクトリにある Docker Desktop 拡張機能とは別製品です。
 
-[한국어](README.md) · [English](README.en.md) · [简体中文](README.zh-CN.md) · [Marketplace 掲載説明](docs/marketplace-description.ja.md)
+[한국어](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/README.md) · [English](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/README.en.md) · [简体中文](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/README.zh-CN.md) · [Marketplace 掲載説明](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/docs/marketplace-description.ja.md)
 
 韓国の開発者 **jaewon** が改善し、無料で配布しています。
 
@@ -61,13 +61,13 @@ npm test
 npm run package
 ```
 
-`jaewon-k9s-0.1.1.vsix` が作成されます。次のコマンドでローカルにインストールできます。
+`jaewon-k9s-0.1.2.vsix` が作成されます。次のコマンドでローカルにインストールできます。
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.1.vsix
+code --install-extension jaewon-k9s-0.1.2.vsix
 ```
 
-VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png`](icon.png) です。編集用ベクターソースは [`icon.svg`](icon.svg) で、同じ PNG を拡張機能の Marketplace 掲載画像にも使用できます。
+VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png) です。編集用ベクターソースは [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) で、同じ PNG を拡張機能の Marketplace 掲載画像にも使用できます。
 
 ## Marketplace 公開の準備
 
@@ -75,7 +75,7 @@ VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png
 
 1. Marketplace の発行者 ID `jaewon-lee` がプロジェクト管理者のものか確認し、Visual Studio Marketplace 管理ポータルで発行者を作成または確認します。
 2. manifest、各言語のメタデータ、アイコン、翻訳 README、および `docs/marketplace-description.<locale>.md` の該当言語の説明を確認します。
-3. 上記の手順で VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.1.vsix` を実行します。
+3. 上記の手順で VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.2.vsix` を実行します。
 4. Marketplace の Personal Access Token は必要最小限の **Marketplace (Manage)** スコープで作成して安全に保管します。リポジトリや設定に保存しないでください。
 5. 以下のセキュリティ注意事項を解消し、依存関係全体の監査に合格してから `npx @vscode/vsce login jaewon-lee` で認証します。管理者がバージョンと掲載内容を確認した後にのみ `npx @vscode/vsce publish` を実行してください。
 
@@ -85,4 +85,4 @@ VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png
 
 ## ライセンスとクレジット
 
-拡張機能のソースコードは [MIT License](LICENSE) で公開しています。韓国の開発者 **jaewon** が改善し、無料で配布しています。K9s と Kubernetes は別プロジェクトであり、それぞれの名称、商標、ライセンスに従います。この拡張機能にソフトウェアは同梱されません。
+拡張機能のソースコードは [MIT License](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/LICENSE) で公開しています。韓国の開発者 **jaewon** が改善し、無料で配布しています。K9s と Kubernetes は別プロジェクトであり、それぞれの名称、商標、ライセンスに従います。この拡張機能にソフトウェアは同梱されません。

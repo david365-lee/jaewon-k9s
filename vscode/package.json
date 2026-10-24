@@ -2,7 +2,7 @@
   "name": "jaewon-k9s",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "jaewon-lee",
   "author": "jaewon",
   "license": "MIT",
