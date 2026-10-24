@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-The package command creates `jaewon-k9s-0.1.7.vsix`. Install it locally with:
+The package command creates `jaewon-k9s-0.1.8.vsix`. Install it locally with:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.7.vsix
+code --install-extension jaewon-k9s-0.1.8.vsix
 ```
 
 The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png); [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) is its editable vector source. The same PNG can be used in the publisher's extension listing.
@@ -90,7 +90,7 @@ The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](https:/
 Update the existing Marketplace listing through the publisher management page:
 
 1. Review the manifest, localized metadata, icon, translated READMEs, and `docs/marketplace-description.<locale>.md`.
-2. Build and test the VSIX. To set its filename explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.7.vsix`.
+2. Build and test the VSIX. To set its filename explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix`.
 3. In Visual Studio Marketplace publisher management, select **Jaewon K9s → More Actions → Update**, then upload the VSIX.
 
 Update the existing `jaewon-k9s` listing rather than creating a new extension. The manifest and package include the icon and localized extension metadata.

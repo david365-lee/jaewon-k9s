@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-`jaewon-k9s-0.1.7.vsix` が作成されます。次のコマンドでローカルにインストールできます。
+`jaewon-k9s-0.1.8.vsix` が作成されます。次のコマンドでローカルにインストールできます。
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.7.vsix
+code --install-extension jaewon-k9s-0.1.8.vsix
 ```
 
 VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png) です。編集用ベクターソースは [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) で、同じ PNG を拡張機能の Marketplace 掲載画像にも使用できます。
@@ -90,7 +90,7 @@ VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png
 既存の Marketplace 掲載を発行者管理ページから更新します。
 
 1. manifest、各言語のメタデータ、アイコン、翻訳 README、および `docs/marketplace-description.<locale>.md` を確認します。
-2. VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.7.vsix` を実行します。
+2. VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix` を実行します。
 3. Visual Studio Marketplace 発行者管理ページで **Jaewon K9s → More Actions → Update** を選び、VSIX をアップロードします。
 
 新しい拡張を作成せず、既存の `jaewon-k9s` 掲載を更新してください。アイコンとローカライズされた拡張メタデータは manifest とパッケージに含まれます。

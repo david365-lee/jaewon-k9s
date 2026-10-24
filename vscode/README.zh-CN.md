@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-命令将生成 `jaewon-k9s-0.1.7.vsix`。可使用以下命令本地安装：
+命令将生成 `jaewon-k9s-0.1.8.vsix`。可使用以下命令本地安装：
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.7.vsix
+code --install-extension jaewon-k9s-0.1.8.vsix
 ```
 
 VS Code 包使用透明背景的 128×128 PNG [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png) 作为图标；可编辑的矢量源文件是 [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg)。同一 PNG 也可用于扩展 Marketplace 页面。
@@ -90,7 +90,7 @@ VS Code 包使用透明背景的 128×128 PNG [`icon.png`](https://github.com/da
 通过发布者管理页面更新现有 Marketplace 扩展：
 
 1. 检查 manifest、本地化元数据、图标、翻译后的 README，以及 `docs/marketplace-description.<locale>.md`。
-2. 构建并测试 VSIX。若要指定文件名，请运行 `npx @vscode/vsce package --out jaewon-k9s-0.1.7.vsix`。
+2. 构建并测试 VSIX。若要指定文件名，请运行 `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix`。
 3. 在 Visual Studio Marketplace 发布者管理页面中选择 **Jaewon K9s → More Actions → Update**，然后上传 VSIX。
 
 请更新现有的 `jaewon-k9s` 扩展，而不是创建新扩展。图标和本地化扩展元数据已包含在 manifest 和包中。

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.8 — 2026-10-24
+
+- Register a dedicated Jaewon K9s Activity Bar container and an Open K9s launcher.
+- Include the monochrome terminal SVG for the Activity Bar and matching PNG/SVG package artwork.
+
+
 ## 0.1.7 — 2026-10-24
 
 - Consolidate Windows rendering fixes: initialize UTF-8 before K9s, enforce single-cell ambiguous characters, and use full-color output by default.

@@ -2,7 +2,7 @@
   "name": "jaewon-k9s",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "publisher": "jaewon-lee",
   "author": "jaewon",
   "license": "MIT",
@@ -33,7 +33,8 @@
     "onCommand:jaewonK9s.open",
     "onCommand:jaewonK9s.zoomIn",
     "onCommand:jaewonK9s.zoomOut",
-    "onCommand:jaewonK9s.zoomReset"
+    "onCommand:jaewonK9s.zoomReset",
+    "onView:jaewonK9s.launcher"
   ],
   "contributes": {
     "commands": [
@@ -101,6 +102,24 @@
     },
     "configurationDefaults": {
       "terminal.integrated.mouseWheelZoom": true
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "jaewonK9s",
+          "title": "Jaewon K9s",
+          "icon": "activity-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "jaewonK9s": [
+        {
+          "id": "jaewonK9s.launcher",
+          "name": "K9s",
+          "visibility": "visible"
+        }
+      ]
     }
   },
   "scripts": {

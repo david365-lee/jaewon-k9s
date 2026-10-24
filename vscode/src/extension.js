@@ -141,6 +141,15 @@ function activate(context) {
   };
 
   context.subscriptions.push(
+    vscode.window.registerTreeDataProvider('jaewonK9s.launcher', {
+      getTreeItem: item => item,
+      getChildren: () => {
+        const item = new vscode.TreeItem('Open K9s');
+        item.iconPath = new vscode.ThemeIcon('terminal');
+        item.command = { command: 'jaewonK9s.open', title: 'Open K9s' };
+        return [item];
+      }
+    }),
     vscode.commands.registerCommand('jaewonK9s.open', report(openK9s)),
     vscode.commands.registerCommand('jaewonK9s.zoomIn', report(() => terminalZoom('workbench.action.terminal.fontZoomIn'))),
     vscode.commands.registerCommand('jaewonK9s.zoomOut', report(() => terminalZoom('workbench.action.terminal.fontZoomOut'))),
