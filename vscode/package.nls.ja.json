@@ -1,6 +1,6 @@
 {
   "extension.displayName": "Jaewon K9s",
-  "extension.description": "VS Code でローカルまたはリモートの Kubernetes コンテキストを選択して K9s を実行する無料拡張機能です。",
+  "extension.description": "韓国の開発者 jaewon が無料で配布する MIT ライセンスの K9s 拡張機能です。",
   "command.open": "Jaewon K9s: Kubernetes コンテキストで K9s を開く",
   "command.zoomIn": "Jaewon K9s: ターミナルを拡大",
   "command.zoomOut": "Jaewon K9s: ターミナルを縮小",

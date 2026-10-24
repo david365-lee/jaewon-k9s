@@ -61,10 +61,10 @@ npm test
 npm run package
 ```
 
-命令将生成 `jaewon-k9s-0.1.0.vsix`。可使用以下命令本地安装：
+命令将生成 `jaewon-k9s-0.1.1.vsix`。可使用以下命令本地安装：
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.0.vsix
+code --install-extension jaewon-k9s-0.1.1.vsix
 ```
 
 VS Code 包使用透明背景的 128×128 PNG [`icon.png`](icon.png) 作为图标；可编辑的矢量源文件是 [`icon.svg`](icon.svg)。同一 PNG 也可用于扩展 Marketplace 页面。
@@ -75,7 +75,7 @@ VS Code 包使用透明背景的 128×128 PNG [`icon.png`](icon.png) 作为图�
 
 1. 确认 Marketplace 发布者 ID `jaewon-lee` 属于项目维护者，并在 Visual Studio Marketplace 管理门户中创建或验证发布者。
 2. 检查 manifest、本地化元数据、图标、翻译后的 README，以及 `docs/marketplace-description.<locale>.md` 中对应语言的详细说明。
-3. 按上述步骤构建并测试 VSIX。若要指定文件名，请运行 `npx @vscode/vsce package --out jaewon-k9s-0.1.0.vsix`。
+3. 按上述步骤构建并测试 VSIX。若要指定文件名，请运行 `npx @vscode/vsce package --out jaewon-k9s-0.1.1.vsix`。
 4. 创建仅具有所需最低 **Marketplace (Manage)** 权限的 Personal Access Token，并安全保存；不要提交到仓库或写入项目设置。
 5. 先解决下方安全提示并通过完整依赖审计，再使用 `npx @vscode/vsce login jaewon-lee` 登录。只有维护者确认版本和上架内容后，才运行 `npx @vscode/vsce publish`。
 

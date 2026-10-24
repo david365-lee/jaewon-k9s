@@ -1,11 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="15" y="17" width="98" height="94" rx="16" stroke="#007ACC" stroke-width="6"/>
-    <path d="M16 42h96" stroke="#007ACC" stroke-width="5"/>
-    <circle cx="29" cy="30" r="3" fill="#4FC1FF" stroke="none"/>
-    <circle cx="40" cy="30" r="3" fill="#4FC1FF" stroke="none"/>
-    <circle cx="51" cy="30" r="3" fill="#4FC1FF" stroke="none"/>
-    <path d="m33 61 17 14-17 14m27 0h18" stroke="#4FC1FF" stroke-width="7"/>
-  </g>
-  <text x="77" y="82" fill="#E6EDF3" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">K9s</text>
+  <defs>
+    <linearGradient id="frame" x1="15" y1="15" x2="111" y2="113" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4FC1FF"/>
+      <stop offset="1" stop-color="#007ACC"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="22" y1="24" x2="106" y2="104" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172B45"/>
+      <stop offset="1" stop-color="#0B1728"/>
+    </linearGradient>
+  </defs>
+  <rect x="11" y="13" width="106" height="102" rx="21" fill="url(#screen)" stroke="url(#frame)" stroke-width="5"/>
+  <path d="M13.5 42.5h101" stroke="url(#frame)" stroke-width="3"/>
+  <circle cx="27" cy="28" r="3.5" fill="#FF6B8A"/>
+  <circle cx="39" cy="28" r="3.5" fill="#FFD166"/>
+  <circle cx="51" cy="28" r="3.5" fill="#4FE0B5"/>
+  <path d="m25 58 13 11-13 11m19 0h8" fill="none" stroke="#4FC1FF" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.5"/>
+  <text x="56" y="82" fill="#F4F8FF" font-family="Segoe UI, Arial, sans-serif" font-size="31" font-weight="700" letter-spacing="-1.7">k9s</text>
 </svg>

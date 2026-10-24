@@ -22,4 +22,4 @@ Context discovery runs locally on the host. The extension does not upload or per
 
 ## Author and license
 
-Improved and distributed for free by jaewon, a developer from South Korea. The extension source is MIT-licensed and does not bundle K9s. Trademarks and licenses remain with their respective owners.
+This extension is independently improved and shared for free by jaewon, a developer from South Korea, to make everyday Kubernetes work a little more convenient. You are welcome to use it for personal or company projects, and the MIT License lets you inspect, modify, and redistribute its source. The extension does not bundle K9s or represent the K9s project. K9s and Kubernetes trademarks and licenses remain with their respective owners.

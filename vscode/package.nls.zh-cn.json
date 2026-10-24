@@ -1,6 +1,6 @@
 {
   "extension.displayName": "Jaewon K9s",
-  "extension.description": "在 VS Code 中选择本地或远程 Kubernetes 上下文并运行 K9s 的免费扩展。",
+  "extension.description": "由韩国开发者 jaewon 免费发布的 MIT 许可证 K9s 扩展。",
   "command.open": "Jaewon K9s：为 Kubernetes 上下文打开 K9s",
   "command.zoomIn": "Jaewon K9s：放大终端",
   "command.zoomOut": "Jaewon K9s：缩小终端",

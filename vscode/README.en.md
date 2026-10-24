@@ -61,10 +61,10 @@ npm test
 npm run package
 ```
 
-The package command creates `jaewon-k9s-0.1.0.vsix`. Install it locally with:
+The package command creates `jaewon-k9s-0.1.1.vsix`. Install it locally with:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.0.vsix
+code --install-extension jaewon-k9s-0.1.1.vsix
 ```
 
 The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](icon.png); [`icon.svg`](icon.svg) is its editable vector source. The same PNG can be used in the publisher's extension listing.
@@ -75,7 +75,7 @@ Publishing has **not** been performed. Before publishing:
 
 1. Verify that publisher ID `jaewon-lee` belongs to the project maintainer; create or verify the publisher in the Visual Studio Marketplace management portal.
 2. Review the manifest, localized metadata, icon, translated READMEs, and the matching detailed listing in `docs/marketplace-description.<locale>.md`.
-3. Build and test the VSIX as above. To set the artifact name explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.0.vsix`.
+3. Build and test the VSIX as above. To set the artifact name explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.1.vsix`.
 4. Create a Marketplace Personal Access Token with the minimum required **Marketplace (Manage)** scope. Store it securely; never commit it or add it to project settings.
 5. First resolve the security note below and pass a full dependency audit. Then authenticate with `npx @vscode/vsce login jaewon-lee`; publish with `npx @vscode/vsce publish` only after the project owner confirms the version and listing.
 

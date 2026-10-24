@@ -61,10 +61,10 @@ npm test
 npm run package
 ```
 
-패키징 명령은 `jaewon-k9s-0.1.0.vsix`를 생성합니다. 로컬 설치 명령:
+패키징 명령은 `jaewon-k9s-0.1.1.vsix`를 생성합니다. 로컬 설치 명령:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.0.vsix
+code --install-extension jaewon-k9s-0.1.1.vsix
 ```
 
 VS Code 패키지 아이콘은 투명 배경의 128×128 PNG인 [`icon.png`](icon.png)입니다. 편집 가능한 벡터 원본은 [`icon.svg`](icon.svg)이며, 같은 PNG를 Marketplace 확장 목록에도 사용할 수 있습니다.
@@ -75,7 +75,7 @@ VS Code 패키지 아이콘은 투명 배경의 128×128 PNG인 [`icon.png`](ico
 
 1. Marketplace 게시자 ID `jaewon-lee`가 프로젝트 관리자 소유인지 확인하고, Visual Studio Marketplace 관리 포털에서 게시자를 생성하거나 검증합니다.
 2. manifest, 현지화된 이름과 설명, 아이콘, 번역 README 및 `docs/marketplace-description.<locale>.md`의 해당 언어별 상세 설명을 검토합니다.
-3. 위 절차에 따라 VSIX를 빌드하고 테스트합니다. 출력 파일명을 지정하려면 `npx @vscode/vsce package --out jaewon-k9s-0.1.0.vsix`를 사용합니다.
+3. 위 절차에 따라 VSIX를 빌드하고 테스트합니다. 출력 파일명을 지정하려면 `npx @vscode/vsce package --out jaewon-k9s-0.1.1.vsix`를 사용합니다.
 4. 필요한 최소 권한인 **Marketplace (Manage)** 범위의 Personal Access Token을 만들고 안전하게 보관합니다. 저장소에 커밋하거나 프로젝트 설정에 넣지 마세요.
 5. 아래 보안 유의사항을 해결하고 전체 의존성 감사를 통과한 뒤 `npx @vscode/vsce login jaewon-lee`로 인증합니다. 프로젝트 관리자가 버전과 목록 내용을 확인한 후에만 `npx @vscode/vsce publish`를 실행합니다.
 

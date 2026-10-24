@@ -1,6 +1,6 @@
 {
   "extension.displayName": "Jaewon K9s",
-  "extension.description": "Free K9s terminal for local and remote Kubernetes contexts in VS Code.",
+  "extension.description": "A free MIT-licensed K9s terminal extension by jaewon, a developer from South Korea.",
   "command.open": "Jaewon K9s: Open K9s for a Kubernetes Context",
   "command.zoomIn": "Jaewon K9s: Increase Terminal Zoom",
   "command.zoomOut": "Jaewon K9s: Decrease Terminal Zoom",

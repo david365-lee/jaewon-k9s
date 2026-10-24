@@ -22,4 +22,4 @@ Ctrl+鼠标滚轮缩放会启用 VS Code 的 `terminal.integrated.mouseWheelZoom
 
 ## 作者与许可证
 
-本项目由韩国开发者 jaewon 改进并免费发布。扩展源代码采用 MIT 许可证，不捆绑 K9s。商标和许可证归各自所有者所有。
+这款扩展由韩国开发者 jaewon 独立改进并免费分享，希望让日常 Kubernetes 工作更轻松一些。欢迎用于个人或公司项目；根据 MIT 许可证，您也可以查看、修改和重新分发源代码。本扩展不捆绑 K9s，也不代表 K9s 项目。K9s 和 Kubernetes 的商标及许可证归各自所有者所有。
