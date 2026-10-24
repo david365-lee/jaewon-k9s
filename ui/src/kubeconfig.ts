@@ -73,6 +73,16 @@ export function listContexts(config: KubeConfig): KubeContext[] {
     });
 }
 
+export function filterContexts(contexts: KubeContext[], query: string): KubeContext[] {
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+  if (!normalizedQuery) {
+    return contexts;
+  }
+  return contexts.filter((context) =>
+    `${context.name} ${context.cluster} ${context.server}`.toLocaleLowerCase().includes(normalizedQuery),
+  );
+}
+
 export function isLocalContext(name: string, server: string): boolean {
   if (localContextName.test(name)) {
     return true;

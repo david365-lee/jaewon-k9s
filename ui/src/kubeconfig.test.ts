@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clampZoom, isLocalContext, listContexts, prepareKubeconfig } from "./kubeconfig";
+import { clampZoom, filterContexts, isLocalContext, listContexts, prepareKubeconfig } from "./kubeconfig";
 
 describe("Kubernetes context selection", () => {
   it("classifies Docker Desktop, loopback, and remote contexts", () => {
@@ -16,6 +16,17 @@ describe("Kubernetes context selection", () => {
     expect(contexts).toEqual([
       { name: "kind-dev", cluster: "local-cluster", server: "https://localhost:6443", local: true },
     ]);
+  });
+
+  it("searches all contexts by name, cluster, or API endpoint without regard to case", () => {
+    const contexts = [
+      { name: "docker-desktop", cluster: "local", server: "https://localhost:6443", local: true },
+      { name: "production", cluster: "prod-cluster", server: "https://api.example.net", local: false },
+    ];
+    expect(filterContexts(contexts, "PROD")).toEqual([contexts[1]]);
+    expect(filterContexts(contexts, "localhost")).toEqual([contexts[0]]);
+    expect(filterContexts(contexts, "  ")).toEqual(contexts);
+    expect(filterContexts(contexts, "missing")).toEqual([]);
   });
 });
 

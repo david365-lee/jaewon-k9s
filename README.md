@@ -14,9 +14,10 @@ Docker Desktop판과 별도로, 호스트의 `kubectl` 및 K9s를 사용해 VS C
 | --- | --- |
 | 로컬 클러스터 | 호스트 kubeconfig의 Docker Desktop, Kind, Minikube 등 로컬 컨텍스트를 선택합니다. |
 | 원격 클러스터 | 호스트 `kubectl` kubeconfig에 등록된 원격 컨텍스트를 선택합니다. VPN·방화벽·인증 설정은 Docker Desktop 컨테이너에서도 접근 가능해야 합니다. |
-| 컨텍스트 미리보기 | 컨텍스트 이름과 API 서버 주소를 표시하고 목록을 다시 불러옵니다. 분류가 맞지 않으면 전체 컨텍스트 표시 옵션을 사용합니다. |
+| 통합 컨텍스트 선택 | 로컬·원격 구분 없이 한 목록에서 이름이나 API 주소를 검색하고 선택합니다. |
 | K9s 터미널 | 선택한 컨텍스트를 명시적으로 연결한 뒤 K9s를 엽니다. 호스트의 kubeconfig를 수정하지 않습니다. |
-| 확대·축소 | `−`, `+`, `Reset` 버튼과 `Ctrl/Cmd + +`, `Ctrl/Cmd + -`, `Ctrl/Cmd + 0` 단축키를 지원합니다. 확대율은 브라우저 로컬 저장소에 저장됩니다. |
+| 빠른 재연결 | 선택한 컨텍스트로 K9s를 다시 열어 새 터미널 세션을 시작합니다. |
+| 확대·축소 | `−`, `+`, 초기화 버튼과 `Ctrl/Cmd + +`, `Ctrl/Cmd + -`, `Ctrl/Cmd + 0` 단축키를 지원합니다. 확대율은 브라우저 로컬 저장소에 저장됩니다. |
 | 로컬 API 주소 보정 | 컨테이너에서 접근할 수 없는 `localhost`, `127.0.0.1`, `::1` API 주소를 복사본에서 `host.docker.internal`로 바꿉니다. TLS 검증을 끄지 않고 원래 호스트명을 TLS 서버 이름으로 보존합니다. |
 | 인증 의존성 안내 | `exec` 플러그인, 호스트 token 파일, 프록시 등 컨테이너 내부 준비가 필요한 구성을 연결 후 안내합니다. |
 
@@ -38,22 +39,22 @@ AWS/GCP/Azure 등의 `exec` 인증 플러그인은 해당 실행 파일과 로�
 
 ### Docker Desktop Extension 이미지
 
-릴리스 후 이미지는 GitHub Container Registry에서 배포하는 것을 목표로 합니다.
+최신 릴리스 이미지를 GitHub Container Registry에서 설치합니다.
 
 ```powershell
-docker extension install ghcr.io/david365-lee/jaewon-k9s:latest
+docker extension install ghcr.io/david365-lee/jaewon-k9s:0.1.2
 ```
 
-프로젝트 저장소와 이미지 게시가 완료되기 전에는 위 주소를 사용할 수 없습니다. 이 작업에서는 저장소/레지스트리 게시를 위한 프로젝트 구성을 준비하며, 실제 외부 게시 상태는 별도로 확인해야 합니다.
+`latest` 태그를 사용하면 항상 최신 공개 이미지를 설치합니다.
 
 ### 로컬 빌드 및 설치
 
 프로젝트 루트에서 실행합니다. 로컬 설치는 Docker Desktop에 별도 Jaewon K9s 확장을 추가하며 기존 k9s 확장을 제거하거나 변경하지 않습니다.
 
 ```powershell
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
-docker extension install jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
+docker extension install jaewon-k9s:0.1.2
 ```
 
 확장 터미널은 기본적으로 `127.0.0.1:35782`에 바인딩됩니다. 기존 k9s 확장은 `35781`을 사용합니다. 포트가 이미 사용 중이면 `docker-compose.yaml`의 `JAEWON_K9S_PORT` 기본값을 사용 가능한 로컬 포트로 바꾸고 이미지를 다시 빌드합니다.
@@ -61,11 +62,9 @@ docker extension install jaewon-k9s:0.1.0
 ## 사용 방법
 
 1. Docker Desktop의 **Extensions**에서 **Jaewon K9s**를 엽니다.
-2. **Connection type**에서 `Local cluster` 또는 `Remote / other context`를 선택합니다.
-3. **Kubernetes context**에서 대상 컨텍스트를 선택합니다. 목록은 호스트의 kubeconfig에서 가져옵니다.
-4. 분류가 예상과 다르면 **Show contexts from both groups**를 선택합니다.
-5. **Connect**를 누릅니다. 새 컨텍스트를 적용할 때마다 이 단계를 다시 수행합니다.
-6. `−`/`+`/`Reset` 버튼 또는 Ctrl/Cmd 단축키로 터미널 크기를 조정합니다.
+2. 검색창에서 컨텍스트 이름이나 API 주소를 찾아 목록에서 선택합니다. 목록에는 로컬·원격 컨텍스트가 함께 표시됩니다.
+3. **Open K9s**를 눌러 선택한 컨텍스트를 엽니다. 다시 연결하면 새 K9s 터미널 세션이 시작됩니다.
+4. 상단 확대·축소 버튼 또는 Ctrl/Cmd 단축키로 터미널 크기를 조정합니다.
 
 로컬 주소가 `127.0.0.1` 또는 `localhost`인 클러스터는 컨테이너에서 호스트 게이트웨이(`host.docker.internal`)를 통해 접근합니다. 인증서 검증을 끄지 않습니다. 재연결 후 K9s 터미널을 새로 고쳐야 화면이 바뀌는 경우가 있습니다.
 
@@ -108,8 +107,8 @@ npm run build
 
 ```powershell
 cd ..
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
 ```
 
 릴리스 태그 `v*`를 게시하면 GitHub Actions가 `ghcr.io/<owner>/jaewon-k9s`에 Linux amd64/arm64 이미지를 게시하도록 구성되어 있습니다. 저장소에서 GitHub Actions의 패키지 쓰기 권한을 허용해야 합니다.

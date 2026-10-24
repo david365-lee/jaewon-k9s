@@ -1,12 +1,11 @@
 import { createDockerDesktopClient } from "@docker/extension-api-client";
 import { useEffect, useMemo, useState } from "react";
-import { clampZoom, listContexts, parseKubeconfig, prepareKubeconfig, type KubeContext } from "./kubeconfig";
+import { clampZoom, filterContexts, listContexts, parseKubeconfig, prepareKubeconfig, type KubeContext } from "./kubeconfig";
 
 const client = createDockerDesktopClient();
 const terminalUrl = "http://localhost:35782";
 const contextStorageKey = "jaewon-k9s.connected-context";
 const zoomStorageKey = "jaewon-k9s.terminal-zoom";
-type ConnectionMode = "local" | "remote";
 
 async function runHostKubectl(args: string[]): Promise<string> {
   const result = await client.extension.host?.cli.exec("kubectl", args);
@@ -39,10 +38,10 @@ function displayEndpoint(server: string): string {
 
 export function App() {
   const [contexts, setContexts] = useState<KubeContext[]>([]);
-  const [mode, setMode] = useState<ConnectionMode>("local");
-  const [showAllContexts, setShowAllContexts] = useState(false);
   const [selectedContext, setSelectedContext] = useState(() => window.localStorage.getItem(contextStorageKey) ?? "");
+  const [contextQuery, setContextQuery] = useState("");
   const [connectedContext, setConnectedContext] = useState(() => window.localStorage.getItem(contextStorageKey) ?? "");
+  const [terminalSession, setTerminalSession] = useState(0);
   const [zoom, setZoom] = useState(() => clampZoom(Number(window.localStorage.getItem(zoomStorageKey) ?? 1)));
   const [loadingContexts, setLoadingContexts] = useState(true);
   const [connecting, setConnecting] = useState(false);
@@ -50,21 +49,15 @@ export function App() {
   const [notice, setNotice] = useState("");
   const [warnings, setWarnings] = useState<string[]>([]);
 
-  const availableContexts = useMemo(
-    () => showAllContexts ? contexts : contexts.filter((context) => context.local === (mode === "local")),
-    [contexts, mode, showAllContexts],
-  );
-
   useEffect(() => {
     if (loadingContexts) {
       return;
     }
-    if (availableContexts.some((context) => context.name === selectedContext)) {
+    if (contexts.some((context) => context.name === selectedContext)) {
       return;
     }
-    const preferred = availableContexts.find((context) => context.name === "docker-desktop") ?? availableContexts[0];
-    setSelectedContext(preferred?.name ?? "");
-  }, [availableContexts, loadingContexts, selectedContext]);
+    setSelectedContext(contexts[0]?.name ?? "");
+  }, [contexts, loadingContexts, selectedContext]);
 
   useEffect(() => {
     void refreshContexts();
@@ -103,16 +96,14 @@ export function App() {
       const available = listContexts(config);
       setContexts(available);
       if (available.length === 0) {
-        setMode("remote");
         setError("No Kubernetes contexts were found in the host kubeconfig.");
         return;
       }
       const savedContext = window.localStorage.getItem(contextStorageKey);
-      const preferred = available.find((context) => context.name === config["current-context"])
-        ?? available.find((context) => context.name === savedContext)
+      const preferred = available.find((context) => context.name === savedContext)
+        ?? available.find((context) => context.name === config["current-context"])
         ?? available.find((context) => context.name === "docker-desktop")
         ?? available[0];
-      setMode(preferred.local ? "local" : "remote");
       setSelectedContext(preferred.name);
     } catch (caught) {
       setContexts([]);
@@ -149,6 +140,7 @@ export function App() {
       }
       window.localStorage.setItem(contextStorageKey, selectedContext);
       setConnectedContext(selectedContext);
+      setTerminalSession((session) => session + 1);
       setWarnings(prepared.warnings);
       setNotice(
         prepared.rewroteLoopback
@@ -174,6 +166,9 @@ export function App() {
     height: `${100 / scale}%`,
     transform: `scale(${scale})`,
   };
+  const visibleContexts = useMemo(() => filterContexts(contexts, contextQuery), [contexts, contextQuery]);
+  const selectedContextDetails = contexts.find((context) => context.name === selectedContext);
+  const selectedContextVisible = visibleContexts.some((context) => context.name === selectedContext);
 
   return (
     <main className="app">
@@ -181,59 +176,95 @@ export function App() {
         <div className="brand">
           <img src="./jaewon-k9s.svg" alt="" />
           <div>
-            <h1>Jaewon K9s</h1>
-            <p>Free Kubernetes terminal for Docker Desktop</p>
+            <p className="eyebrow">KUBERNETES FOR DOCKER DESKTOP</p>
+            <h1>Jaewon <span>K9s</span></h1>
           </div>
         </div>
         <div className="zoom-controls" aria-label="Terminal zoom controls">
-          <span>Terminal zoom</span>
+          <span>Zoom</span>
           <button type="button" onClick={() => updateZoom(zoom - 0.1)} aria-label="Zoom out">−</button>
           <output aria-live="polite">{Math.round(zoom * 100)}%</output>
           <button type="button" onClick={() => updateZoom(zoom + 0.1)} aria-label="Zoom in">+</button>
-          <button type="button" className="reset-button" onClick={() => updateZoom(1)}>Reset</button>
+          <button type="button" className="reset-button" onClick={() => updateZoom(1)} aria-label="Reset zoom">↺</button>
         </div>
       </header>
 
-      <section className="connection-panel" aria-label="Kubernetes connection">
+      <section className="connection-panel" aria-label="Choose a Kubernetes context">
+        <div className="panel-heading">
+          <div>
+            <p className="eyebrow">YOUR CLUSTER</p>
+            <h2>Where should we connect?</h2>
+          </div>
+          <button
+            type="button"
+            className="refresh-button"
+            onClick={() => void refreshContexts()}
+            disabled={loadingContexts}
+            aria-label="Refresh Kubernetes contexts"
+            title="Refresh contexts"
+          >
+            <span aria-hidden="true">{loadingContexts ? "…" : "↻"}</span>
+          </button>
+        </div>
         <div className="connection-fields">
-          <label className="field">
-            <span>Connection type</span>
-            <select value={mode} onChange={(event) => setMode(event.target.value as ConnectionMode)}>
-              <option value="local">Local cluster</option>
-              <option value="remote">Remote / other context</option>
-            </select>
-          </label>
-          <label className="field context-field">
-            <span>Kubernetes context</span>
+          <div className="context-picker">
+            <label className="search-field">
+              <span className="search-icon" aria-hidden="true">⌕</span>
+              <input
+                type="search"
+                value={contextQuery}
+                onChange={(event) => {
+                  const query = event.target.value;
+                  const matches = filterContexts(contexts, query);
+                  setContextQuery(query);
+                  if (matches.length > 0 && !matches.some((context) => context.name === selectedContext)) {
+                    setSelectedContext(matches[0].name);
+                  }
+                }}
+                placeholder="Search clusters or endpoints"
+                aria-label="Search Kubernetes contexts"
+                disabled={loadingContexts || contexts.length === 0}
+              />
+              <span className="context-count">{visibleContexts.length}</span>
+            </label>
             <select
+              className="context-select"
               value={selectedContext}
               onChange={(event) => setSelectedContext(event.target.value)}
-              disabled={loadingContexts || availableContexts.length === 0}
+              disabled={loadingContexts || visibleContexts.length === 0}
+              aria-label="Kubernetes context"
             >
-              {availableContexts.length === 0 && <option value="">No matching contexts</option>}
-              {availableContexts.map((context) => (
+              {visibleContexts.length === 0 && <option value="">No matching contexts</option>}
+              {visibleContexts.map((context) => (
                 <option key={context.name} value={context.name}>
-                  {context.name} — {displayEndpoint(context.server)}
+                  {context.local ? "LOCAL" : "REMOTE"}  ·  {context.name}  ·  {displayEndpoint(context.server)}
                 </option>
               ))}
             </select>
-          </label>
-          <button type="button" className="secondary-button" onClick={() => void refreshContexts()} disabled={loadingContexts}>
-            {loadingContexts ? "Loading..." : "Refresh contexts"}
-          </button>
-          <button type="button" className="connect-button" onClick={() => void connect()} disabled={connecting || !selectedContext}>
-            {connecting ? "Connecting..." : "Connect"}
+          </div>
+          <button type="button" className="connect-button" onClick={() => void connect()} disabled={connecting || loadingContexts || !selectedContext || !selectedContextVisible}>
+            <span>{connecting ? "Opening K9s..." : connectedContext === selectedContext ? "Reconnect to K9s" : "Open K9s"}</span>
+            <span className="button-arrow" aria-hidden="true">↗</span>
           </button>
         </div>
-        <label className="show-all">
-          <input type="checkbox" checked={showAllContexts} onChange={(event) => setShowAllContexts(event.target.checked)} />
-          Show contexts from both groups
-        </label>
-        {availableContexts.length === 0 && !loadingContexts && contexts.length > 0 && (
-          <p className="hint">No contexts were classified as {mode === "local" ? "local" : "remote"}. Enable “Show contexts from both groups” to choose manually.</p>
+        {contexts.length > 0 && !loadingContexts && visibleContexts.length === 0 && (
+          <p className="hint">No matching contexts. Try another search.</p>
+        )}
+        {contexts.length === 0 && !loadingContexts && !error && (
+          <p className="hint">No contexts found. Check that Kubernetes is enabled and kubectl can read your kubeconfig.</p>
+        )}
+        {selectedContextDetails && selectedContextVisible && (
+          <div className="selected-context">
+            <span className={`context-dot ${selectedContextDetails.local ? "local" : "remote"}`} />
+            <span className={`context-type ${selectedContextDetails.local ? "local" : "remote"}`}>
+              {selectedContextDetails.local ? "LOCAL" : "REMOTE"}
+            </span>
+            <strong title={selectedContextDetails.name}>{selectedContextDetails.name}</strong>
+            <span className="endpoint">{displayEndpoint(selectedContextDetails.server)}</span>
+          </div>
         )}
         {connectedContext && (
-          <p className="status-line">Connected context: <strong>{connectedContext}</strong></p>
+          <p className="status-line"><span className="live-dot" /> K9s session · <strong>{connectedContext}</strong></p>
         )}
         {notice && <p className="notice" role="status">{notice}</p>}
         {warnings.map((warning) => <p className="warning" role="status" key={warning}>{warning}</p>)}
@@ -243,20 +274,21 @@ export function App() {
       <section className="terminal-panel" aria-label="K9s terminal">
         {connectedContext ? (
           <iframe
-            key={connectedContext}
+            key={`${connectedContext}:${terminalSession}`}
             title={`K9s terminal for ${connectedContext}`}
             src={terminalUrl}
             style={iframeStyle}
           />
         ) : (
           <div className="empty-state">
-            <h2>Choose a cluster to start K9s</h2>
-            <p>Select the Docker Desktop cluster or a context from your host kubeconfig, then connect.</p>
+            <div className="terminal-mark" aria-hidden="true"><span>k9s</span><i>_</i></div>
+            <h2>Your terminal is ready</h2>
+            <p>Select a cluster above and open K9s to get started.</p>
           </div>
         )}
       </section>
 
-      <footer>Zoom: use − / + / Reset, or Ctrl/Cmd + +, −, and 0. Some terminal content may require a refresh after resizing.</footer>
+      <footer><span>JAEWON K9S</span><span>Zoom with Ctrl/Cmd + +, −, or 0</span></footer>
     </main>
   );
 }

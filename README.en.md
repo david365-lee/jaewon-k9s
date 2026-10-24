@@ -14,9 +14,9 @@ Alongside the Docker Desktop extension, a separate VS Code extension runs local 
 | --- | --- |
 | Local clusters | Select recognized Docker Desktop, Kind, Minikube, and other local contexts from the host kubeconfig. |
 | Remote clusters | Select other contexts registered with host `kubectl`. VPN, firewall, authentication, and routing must also work from the Docker Desktop container. |
-| Context overview | Review context names and API endpoints, refresh the list, or show all contexts when automatic grouping is not a match. |
-| K9s terminal | Connect explicitly to a selected context before opening K9s. The host kubeconfig is never modified. |
-| Zoom controls | Use `−`, `+`, and `Reset`, or `Ctrl/Cmd + +`, `Ctrl/Cmd + -`, and `Ctrl/Cmd + 0`. Zoom is saved in browser local storage. |
+| Unified context picker | Search and select local or remote contexts from one list by context name or API endpoint. |
+| K9s terminal | Open K9s explicitly for the selected context without modifying the host kubeconfig. Reconnecting starts a fresh terminal session. |
+| Zoom controls | Use `−`, `+`, and reset, or `Ctrl/Cmd + +`, `Ctrl/Cmd + -`, and `Ctrl/Cmd + 0`. Zoom is saved in browser local storage. |
 | Loopback routing | Rewrites `localhost`, `127.0.0.1`, and `::1` API endpoints only in the extension copy, using `host.docker.internal` while preserving TLS server-name validation. |
 | Authentication warnings | Warns about selected configurations that need an exec plugin, host token file, proxy, or other container-side setup. |
 
@@ -38,20 +38,20 @@ An AWS/GCP/Azure `exec` credential plugin may fail unless its binary and login p
 
 ### Docker Desktop extension image
 
-After publication, install the image from GitHub Container Registry:
+Install the latest release image from GitHub Container Registry:
 
 ```powershell
-docker extension install ghcr.io/david365-lee/jaewon-k9s:latest
+docker extension install ghcr.io/david365-lee/jaewon-k9s:0.1.2
 ```
 
-The address is not usable until the repository and image are published. This project prepares the publishing configuration; the actual external publication must be verified separately.
+You can use the `latest` tag to install the newest published image.
 
 ### Build and install locally
 
 ```powershell
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
-docker extension install jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
+docker extension install jaewon-k9s:0.1.2
 ```
 
 The terminal binds to `127.0.0.1:35782` by default, separate from the existing k9s extension on `35781`. If the port is occupied, change the `JAEWON_K9S_PORT` default in `docker-compose.yaml` and rebuild.
@@ -59,11 +59,9 @@ The terminal binds to `127.0.0.1:35782` by default, separate from the existing k
 ## Usage
 
 1. Open **Jaewon K9s** under Docker Desktop **Extensions**.
-2. Choose `Local cluster` or `Remote / other context`.
-3. Pick a context from the host kubeconfig.
-4. Enable **Show contexts from both groups** if a context is classified unexpectedly.
-5. Select **Connect**. Repeat after choosing a different context.
-6. Adjust the terminal using the zoom controls or Ctrl/Cmd shortcuts.
+2. Search by context name or API endpoint, then choose a context. Local and remote contexts appear together.
+3. Select **Open K9s** to start. Reconnecting opens a fresh K9s terminal session.
+4. Adjust the terminal using the zoom controls or Ctrl/Cmd shortcuts.
 
 Loopback API endpoints are routed through `host.docker.internal`; TLS verification remains enabled. The K9s terminal may need a refresh after reconnecting.
 
@@ -89,8 +87,8 @@ npm ci
 npm test -- --run
 npm run build
 cd ..
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
 ```
 
 Publishing a `v*` release tag triggers GitHub Actions to publish Linux amd64/arm64 images to `ghcr.io/<owner>/jaewon-k9s`. GitHub Actions must have package write permission.

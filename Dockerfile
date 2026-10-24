@@ -40,7 +40,7 @@ LABEL org.opencontainers.image.title="Jaewon K9s" \
     org.opencontainers.image.description="Free Docker Desktop K9s extension with local and remote Kubernetes context selection and terminal zoom controls." \
     org.opencontainers.image.vendor="Jaewon" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.version="0.1.0" \
+    org.opencontainers.image.version="0.1.2" \
     org.opencontainers.image.source="https://github.com/david365-lee/jaewon-k9s" \
     com.docker.desktop.extension.icon="https://raw.githubusercontent.com/david365-lee/jaewon-k9s/main/jaewon-k9s.svg" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
@@ -49,7 +49,7 @@ LABEL org.opencontainers.image.title="Jaewon K9s" \
     com.docker.extension.additional-urls="[{\"title\":\"Documentation\",\"url\":\"https://github.com/david365-lee/jaewon-k9s\"}]" \
     com.docker.extension.screenshots="[]" \
     com.docker.extension.categories="kubernetes,utility-tools" \
-    com.docker.extension.changelog="0.1.0: local and remote context selection, safe loopback routing, terminal zoom controls, and K9s v0.51.0."
+    com.docker.extension.changelog="0.1.2: streamlined searchable context picker, refreshed UI, reliable K9s reconnect, and K9s v0.51.0."
 
 COPY metadata.json jaewon-k9s.svg docker-compose.yaml /
 COPY third-party/ttyd-LICENSE /licenses/ttyd-LICENSE

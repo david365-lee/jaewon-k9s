@@ -10,9 +10,9 @@
 | --- | --- |
 | ローカルクラスター | ホストの kubeconfig から Docker Desktop、Kind、Minikube などのローカルコンテキストを選択します。 |
 | リモートクラスター | ホスト `kubectl` の kubeconfig に登録されたリモートコンテキストを選択します。VPN、ファイアウォール、認証、ルーティングも Docker Desktop コンテナから利用可能である必要があります。 |
-| コンテキスト一覧 | コンテキスト名と API サーバーを確認し、一覧を更新できます。自動分類が合わない場合はすべてのコンテキストを表示できます。 |
-| K9s ターミナル | 選択したコンテキストを明示して K9s を起動します。ホストの kubeconfig は変更しません。 |
-| ズーム操作 | `−`、`+`、`Reset` ボタン、および `Ctrl/Cmd + +`、`Ctrl/Cmd + -`、`Ctrl/Cmd + 0` を使用できます。ズーム倍率はブラウザーのローカルストレージに保存されます。 |
+| コンテキスト選択 | ローカル・リモートをまとめた一覧から、名前や API アドレスで検索・選択できます。 |
+| K9s ターミナル | 選択したコンテキストで K9s を明示的に起動し、ホストの kubeconfig は変更しません。再接続時は新しいターミナルセッションを開始します。 |
+| ズーム操作 | `−`、`+`、リセットボタン、および `Ctrl/Cmd + +`、`Ctrl/Cmd + -`、`Ctrl/Cmd + 0` を使用できます。ズーム倍率はブラウザーのローカルストレージに保存されます。 |
 | localhost 接続 | 拡張機能用のコピーに限り `localhost`、`127.0.0.1`、`::1` を `host.docker.internal` に置き換え、TLS サーバー名の検証を維持します。 |
 | 認証に関する注意 | `exec` プラグイン、ホストの token ファイル、プロキシなど、コンテナ内で追加設定が必要な構成を案内します。 |
 
@@ -34,20 +34,20 @@ AWS/GCP/Azure などの `exec` 認証プラグインは、実行ファイルや�
 
 ### GitHub Container Registry から
 
-リリース後、次のコマンドでインストールできます。
+最新リリースを次のコマンドでインストールします。
 
 ```powershell
-docker extension install ghcr.io/david365-lee/jaewon-k9s:latest
+docker extension install ghcr.io/david365-lee/jaewon-k9s:0.1.2
 ```
 
-リポジトリとイメージの公開が完了するまでは、このアドレスは利用できません。
+`latest` タグを指定すると、最新の公開イメージをインストールできます。
 
 ### ローカルでビルドしてインストール
 
 ```powershell
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
-docker extension install jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
+docker extension install jaewon-k9s:0.1.2
 ```
 
 ターミナルは既定で `127.0.0.1:35782` を使用します。既存の k9s 拡張機能が使う `35781` とは別のポートです。使用中の場合は `docker-compose.yaml` の `JAEWON_K9S_PORT` を変更して再ビルドしてください。
@@ -55,11 +55,9 @@ docker extension install jaewon-k9s:0.1.0
 ## 使い方
 
 1. Docker Desktop の **Extensions** から **Jaewon K9s** を開きます。
-2. `Local cluster` または `Remote / other context` を選択します。
-3. ホスト kubeconfig のコンテキストを選びます。
-4. 分類が正しくない場合は **Show contexts from both groups** を有効にします。
-5. **Connect** を選択します。別のコンテキストに接続する場合は選択し直します。
-6. ズームボタンまたは Ctrl/Cmd ショートカットで文字サイズを調整します。
+2. 検索欄でコンテキスト名または API アドレスを検索し、一覧から選択します。ローカルとリモートは同じ一覧に表示されます。
+3. **Open K9s** を押して起動します。再接続すると新しい K9s ターミナルセッションが始まります。
+4. ズームボタンまたは Ctrl/Cmd ショートカットで文字サイズを調整します。
 
 ## 接続とセキュリティ
 
@@ -83,8 +81,8 @@ npm ci
 npm test -- --run
 npm run build
 cd ..
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
 ```
 
 `v*` リリースタグを公開すると GitHub Actions が Linux amd64/arm64 イメージを `ghcr.io/<owner>/jaewon-k9s` に発行します。GitHub Actions にパッケージ書き込み権限が必要です。

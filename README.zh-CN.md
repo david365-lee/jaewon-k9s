@@ -10,9 +10,9 @@
 | --- | --- |
 | 本地集群 | 从主机 kubeconfig 中选择 Docker Desktop、Kind、Minikube 等本地上下文。 |
 | 远程集群 | 选择主机 `kubectl` kubeconfig 中登记的其他上下文。Docker Desktop 容器也必须能够访问相应 VPN、防火墙、认证和路由。 |
-| 上下文概览 | 查看上下文名称和 API 地址、刷新列表；自动分类不匹配时可显示全部上下文。 |
-| K9s 终端 | 明确指定选中的上下文后启动 K9s，不会修改主机 kubeconfig。 |
-| 缩放控制 | 可使用 `−`、`+`、`Reset` 按钮，或 `Ctrl/Cmd + +`、`Ctrl/Cmd + -`、`Ctrl/Cmd + 0`。缩放值保存在浏览器本地存储中。 |
+| 统一上下文选择 | 在同一列表中搜索并选择本地或远程上下文，可按名称或 API 地址搜索。 |
+| K9s 终端 | 明确使用所选上下文启动 K9s，不会修改主机 kubeconfig。重新连接会启动新的终端会话。 |
+| 缩放控制 | 可使用 `−`、`+`、重置按钮，或 `Ctrl/Cmd + +`、`Ctrl/Cmd + -`、`Ctrl/Cmd + 0`。缩放值保存在浏览器本地存储中。 |
 | 本地 API 路由 | 仅在扩展副本中将 `localhost`、`127.0.0.1`、`::1` 改为 `host.docker.internal`，并保留 TLS 服务器名称验证。 |
 | 认证提示 | 提示需要在容器中额外配置的 `exec` 插件、主机 token 文件或代理等。 |
 
@@ -34,20 +34,20 @@
 
 ### 从 GitHub Container Registry 安装
 
-发布后，可使用以下命令安装：
+使用以下命令安装最新发行镜像：
 
 ```powershell
-docker extension install ghcr.io/david365-lee/jaewon-k9s:latest
+docker extension install ghcr.io/david365-lee/jaewon-k9s:0.1.2
 ```
 
-仓库和镜像发布前，此地址不可用。
+也可使用 `latest` 标签安装最新已发布镜像。
 
 ### 本地构建并安装
 
 ```powershell
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
-docker extension install jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
+docker extension install jaewon-k9s:0.1.2
 ```
 
 终端默认绑定 `127.0.0.1:35782`，与现有 k9s 扩展的 `35781` 分开。如果端口已占用，请修改 `docker-compose.yaml` 中的 `JAEWON_K9S_PORT` 默认值并重新构建。
@@ -55,11 +55,9 @@ docker extension install jaewon-k9s:0.1.0
 ## 使用
 
 1. 在 Docker Desktop 的 **Extensions** 中打开 **Jaewon K9s**。
-2. 选择 `Local cluster` 或 `Remote / other context`。
-3. 从主机 kubeconfig 中选择上下文。
-4. 如果分类不正确，请启用 **Show contexts from both groups**。
-5. 选择 **Connect**。切换上下文时重新选择并连接。
-6. 使用缩放按钮或 Ctrl/Cmd 快捷键调整终端文字大小。
+2. 按上下文名称或 API 地址搜索并选择。所有本地和远程上下文都在同一列表中。
+3. 选择 **Open K9s** 启动。重新连接会创建新的 K9s 终端会话。
+4. 使用缩放按钮或 Ctrl/Cmd 快捷键调整终端文字大小。
 
 ## 连接与安全
 
@@ -83,8 +81,8 @@ npm ci
 npm test -- --run
 npm run build
 cd ..
-docker build -t jaewon-k9s:0.1.0 .
-docker extension validate jaewon-k9s:0.1.0
+docker build -t jaewon-k9s:0.1.2 .
+docker extension validate jaewon-k9s:0.1.2
 ```
 
 发布 `v*` 标签会触发 GitHub Actions，将 Linux amd64/arm64 镜像发布到 `ghcr.io/<owner>/jaewon-k9s`。GitHub Actions 需要软件包写入权限。
