@@ -11,7 +11,7 @@
 - ローカルとリモートの Kubernetes コンテキストを1つの一覧から検索・選択できます。
 - 一覧にはローカル/リモートの種別、現在のコンテキスト、クラスター、API アドレスが表示されます。
 - 選択したコンテキストを指定して、新しい統合ターミナルで `k9s --context <name>` を起動します。
-- ターミナルの拡大、縮小、リセットコマンドを提供します。`terminal.integrated.mouseWheelZoom` により `Ctrl` + マウスホイールも既定で有効です。
+- K9s サイドバーの精密ズーム領域でホイールを動かすと、フォントサイズが 1px ずつ変わります。小さな入力を蓄積し、連続入力を制限します。数値入力、+/−、リセットも使用できます。標準の Ctrl+ホイールズームは既定で無効です。`terminal.integrated.mouseWheelZoom` を明示的に有効にしている場合は設定で無効にしてください。サイズ変更はすべての統合ターミナルに適用されます。
 - `kubectl` と K9s の実行ファイル、任意の kubeconfig、コマンドのタイムアウトを設定できます。
 - コマンド名、設定名、プロンプトは韓国語、英語、日本語、簡体字中国語に対応します。
 
@@ -51,7 +51,7 @@ k9s:
 
 ## ズーム動作
 
-ズームコマンドは VS Code 組み込みの統合ターミナル文字サイズ変更操作を呼び出します。既定で `terminal.integrated.mouseWheelZoom` を `true` にし、`Ctrl` + マウスホイールで拡大・縮小できます。この設定は K9s のみでなく **すべての統合ターミナル** に適用されます。明示的なズームコマンドのみ使う場合は設定で無効にしてください。
+K9s サイドバーの精密ズーム領域でホイールを動かすと、フォントサイズが 1px ずつ変わります。小さな入力を蓄積し、連続入力を制限します。数値入力、+/−、リセットも使用できます。標準の Ctrl+ホイールズームは既定で無効です。`terminal.integrated.mouseWheelZoom` を明示的に有効にしている場合は設定で無効にしてください。サイズ変更はすべての統合ターミナルに適用されます。
 
 ## 設定
 
@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-`jaewon-k9s-0.1.8.vsix` が作成されます。次のコマンドでローカルにインストールできます。
+`jaewon-k9s-0.1.9.vsix` が作成されます。次のコマンドでローカルにインストールできます。
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.8.vsix
+code --install-extension jaewon-k9s-0.1.9.vsix
 ```
 
 VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png) です。編集用ベクターソースは [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) で、同じ PNG を拡張機能の Marketplace 掲載画像にも使用できます。
@@ -90,7 +90,7 @@ VS Code パッケージのアイコンは透明背景の 128×128 PNG [`icon.png
 既存の Marketplace 掲載を発行者管理ページから更新します。
 
 1. manifest、各言語のメタデータ、アイコン、翻訳 README、および `docs/marketplace-description.<locale>.md` を確認します。
-2. VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix` を実行します。
+2. VSIX をビルドしてテストします。出力名を指定する場合は `npx @vscode/vsce package --out jaewon-k9s-0.1.9.vsix` を実行します。
 3. Visual Studio Marketplace 発行者管理ページで **Jaewon K9s → More Actions → Update** を選び、VSIX をアップロードします。
 
 新しい拡張を作成せず、既存の `jaewon-k9s` 掲載を更新してください。アイコンとローカライズされた拡張メタデータは manifest とパッケージに含まれます。

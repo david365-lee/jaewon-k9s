@@ -11,7 +11,7 @@
 - 단일 검색 선택창에서 로컬·원격 Kubernetes 컨텍스트를 함께 검색하고 선택합니다.
 - 목록에서 로컬/원격 유형, 현재 컨텍스트, 클러스터와 API 주소를 확인할 수 있습니다.
 - 선택한 컨텍스트를 지정해 새 통합 터미널에서 `k9s --context <name>`을 실행합니다.
-- 터미널 확대·축소·초기화 명령을 제공합니다. `terminal.integrated.mouseWheelZoom` 기본값을 활성화해 `Ctrl`+마우스 휠 확대·축소도 지원합니다.
+- K9s 사이드바의 정밀 확대·축소 영역에서 휠을 움직이면 글꼴 크기가 1px씩 바뀝니다. 작은 입력은 누적하고 빠른 연속 입력은 제한합니다. 숫자 직접 입력과 +/−, 초기화 버튼도 제공합니다. VS Code 기본 Ctrl+휠 확대는 기본값에서 껐습니다. 사용자 설정에서 `terminal.integrated.mouseWheelZoom`을 명시적으로 켰다면 직접 꺼 주세요. 크기 변경은 모든 통합 터미널에 적용됩니다.
 - `kubectl` 및 K9s 실행 파일 경로, 선택적 kubeconfig 파일, 명령 시간 제한을 설정할 수 있습니다.
 - 한국어, 영어, 일본어, 중국어 간체로 명령, 설정 및 프롬프트를 표시합니다.
 
@@ -51,7 +51,7 @@ k9s:
 
 ## 확대·축소 동작
 
-확대·축소 명령은 VS Code 내장 통합 터미널 글꼴 확대·축소 기능을 사용합니다. 기본적으로 `terminal.integrated.mouseWheelZoom`을 `true`로 설정해 `Ctrl`+마우스 휠을 지원합니다. 이 설정은 K9s뿐 아니라 **모든 통합 터미널**에 적용됩니다. 명령을 통한 확대·축소만 사용하려면 VS Code 설정에서 비활성화하세요.
+K9s 사이드바의 정밀 확대·축소 영역에서 휠을 움직이면 글꼴 크기가 1px씩 바뀝니다. 작은 입력은 누적하고 빠른 연속 입력은 제한합니다. 숫자 직접 입력과 +/−, 초기화 버튼도 제공합니다. VS Code 기본 Ctrl+휠 확대는 기본값에서 껐습니다. 사용자 설정에서 `terminal.integrated.mouseWheelZoom`을 명시적으로 켰다면 직접 꺼 주세요. 크기 변경은 모든 통합 터미널에 적용됩니다.
 
 ## 설정
 
@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-패키징 명령은 `jaewon-k9s-0.1.8.vsix`를 생성합니다. 로컬 설치 명령:
+패키징 명령은 `jaewon-k9s-0.1.9.vsix`를 생성합니다. 로컬 설치 명령:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.8.vsix
+code --install-extension jaewon-k9s-0.1.9.vsix
 ```
 
 VS Code 패키지 아이콘은 투명 배경의 128×128 PNG인 [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png)입니다. 편집 가능한 벡터 원본은 [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg)이며, 같은 PNG를 Marketplace 확장 목록에도 사용할 수 있습니다.
@@ -90,7 +90,7 @@ VS Code 패키지 아이콘은 투명 배경의 128×128 PNG인 [`icon.png`](htt
 Marketplace에 공개된 확장은 게시자 관리 포털에서 업데이트할 수 있습니다.
 
 1. manifest, 현지화된 이름과 설명, 아이콘, 번역 README 및 `docs/marketplace-description.<locale>.md`를 검토합니다.
-2. VSIX를 빌드하고 테스트합니다. 필요하면 `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix`로 출력 파일명을 지정합니다.
+2. VSIX를 빌드하고 테스트합니다. 필요하면 `npx @vscode/vsce package --out jaewon-k9s-0.1.9.vsix`로 출력 파일명을 지정합니다.
 3. Visual Studio Marketplace의 게시자 관리 페이지에서 **Jaewon K9s → More Actions → Update**를 선택한 뒤 VSIX를 업로드합니다.
 
 새 확장을 등록하는 대신 기존 `jaewon-k9s` 항목을 업데이트해야 합니다. 아이콘과 현지화된 확장 메타데이터는 manifest와 패키지에 포함됩니다.

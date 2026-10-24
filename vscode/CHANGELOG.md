@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.9 ? 2026-10-24
+
+- Add precise wheel zoom in the K9s sidebar: accumulate 120px of normalized wheel input, change by 1px, and limit rapid bursts to one change per 180ms.
+- Add exact font-size entry and +/?/Reset controls. Font size affects all integrated terminals.
+- Disable native terminal Ctrl+wheel zoom by default; explicit user overrides remain respected. VS Code does not expose terminal wheel events to extensions.
+- Render icon.png directly from icon.svg and use the same PNG for the publisher icon asset.
+
+
 ## 0.1.8 — 2026-10-24
 
 - Register a dedicated Jaewon K9s Activity Bar container and an Open K9s launcher.

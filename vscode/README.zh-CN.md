@@ -11,7 +11,7 @@
 - 在一个可搜索的列表中查找并选择本地或远程 Kubernetes 上下文。
 - 列表显示本地/远程类型、当前上下文、集群和 API 地址。
 - 在新的集成终端中使用 `k9s --context <name>` 启动选定上下文。
-- 提供终端放大、缩小和重置命令。默认通过 `terminal.integrated.mouseWheelZoom` 启用 `Ctrl` + 鼠标滚轮缩放。
+- 在 K9s 侧栏的精细缩放区域滚动滚轮，可按 1px 调整字体大小。小幅输入会累积，快速连续输入受到限制。也可直接输入大小或使用 +/− 和重置按钮。默认禁用原生 Ctrl+滚轮缩放；如果您明确启用了 `terminal.integrated.mouseWheelZoom`，请在设置中关闭它。字体大小更改会影响所有集成终端。
 - 配置 `kubectl` 和 K9s 可执行文件路径、可选 kubeconfig 文件及命令超时。
 - 命令、设置和提示支持韩语、英语、日语和简体中文。
 
@@ -51,7 +51,7 @@ k9s:
 
 ## 缩放行为
 
-缩放命令调用 VS Code 内置的集成终端字体缩放操作。默认将 `terminal.integrated.mouseWheelZoom` 设为 `true`，以支持 `Ctrl` + 鼠标滚轮。该设置作用于**所有集成终端**，而不仅是 K9s。如只想使用显式缩放命令，可在设置中关闭。
+在 K9s 侧栏的精细缩放区域滚动滚轮，可按 1px 调整字体大小。小幅输入会累积，快速连续输入受到限制。也可直接输入大小或使用 +/− 和重置按钮。默认禁用原生 Ctrl+滚轮缩放；如果您明确启用了 `terminal.integrated.mouseWheelZoom`，请在设置中关闭它。字体大小更改会影响所有集成终端。
 
 ## 设置
 
@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-命令将生成 `jaewon-k9s-0.1.8.vsix`。可使用以下命令本地安装：
+命令将生成 `jaewon-k9s-0.1.9.vsix`。可使用以下命令本地安装：
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.8.vsix
+code --install-extension jaewon-k9s-0.1.9.vsix
 ```
 
 VS Code 包使用透明背景的 128×128 PNG [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png) 作为图标；可编辑的矢量源文件是 [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg)。同一 PNG 也可用于扩展 Marketplace 页面。
@@ -90,7 +90,7 @@ VS Code 包使用透明背景的 128×128 PNG [`icon.png`](https://github.com/da
 通过发布者管理页面更新现有 Marketplace 扩展：
 
 1. 检查 manifest、本地化元数据、图标、翻译后的 README，以及 `docs/marketplace-description.<locale>.md`。
-2. 构建并测试 VSIX。若要指定文件名，请运行 `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix`。
+2. 构建并测试 VSIX。若要指定文件名，请运行 `npx @vscode/vsce package --out jaewon-k9s-0.1.9.vsix`。
 3. 在 Visual Studio Marketplace 发布者管理页面中选择 **Jaewon K9s → More Actions → Update**，然后上传 VSIX。
 
 请更新现有的 `jaewon-k9s` 扩展，而不是创建新扩展。图标和本地化扩展元数据已包含在 manifest 和包中。

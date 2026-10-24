@@ -10,7 +10,7 @@ On Windows, launches with a UTF-8 console and narrow ambiguous-character widths 
 
 - Search local and remote kubeconfig contexts in one picker and review each context's type, current status, cluster, and API endpoint.
 - Pass the selected context explicitly to K9s to avoid unintentionally using the default context.
-- Use zoom-in, zoom-out, and reset commands, plus Ctrl+mouse-wheel zoom.
+- Scroll over the precise zoom control in the K9s sidebar to change the font size by 1px. Small deltas accumulate and rapid bursts are limited. Enter an exact size or use +/− and Reset. Native Ctrl+wheel zoom is disabled by default; if you explicitly enabled `terminal.integrated.mouseWheelZoom`, turn it off in Settings. Font size changes apply to all integrated terminals.
 - Configure the kubectl/K9s executable paths and an optional kubeconfig file.
 - Localized commands and settings for Korean, English, Japanese, and Simplified Chinese.
 
@@ -18,7 +18,7 @@ On Windows, launches with a UTF-8 console and narrow ambiguous-character widths 
 
 Requires VS Code 1.90 or later, locally installed `kubectl` and K9s, and the contexts you want to use. K9s and kubectl are not bundled. Remote connectivity depends on the host's network, VPN, authentication plugins, and credentials.
 
-Ctrl+mouse-wheel zoom enables VS Code's `terminal.integrated.mouseWheelZoom` setting, which affects all integrated terminals—not only K9s.
+Scroll over the precise zoom control in the K9s sidebar to change the font size by 1px. Small deltas accumulate and rapid bursts are limited. Enter an exact size or use +/− and Reset. Native Ctrl+wheel zoom is disabled by default; if you explicitly enabled `terminal.integrated.mouseWheelZoom`, turn it off in Settings. Font size changes apply to all integrated terminals.
 
 ## Privacy and security
 

@@ -2,7 +2,7 @@
   "name": "jaewon-k9s",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "publisher": "jaewon-lee",
   "author": "jaewon",
   "license": "MIT",
@@ -101,7 +101,7 @@
       }
     },
     "configurationDefaults": {
-      "terminal.integrated.mouseWheelZoom": true
+      "terminal.integrated.mouseWheelZoom": false
     },
     "viewsContainers": {
       "activitybar": [
@@ -117,7 +117,8 @@
         {
           "id": "jaewonK9s.launcher",
           "name": "K9s",
-          "visibility": "visible"
+          "visibility": "visible",
+          "type": "webview"
         }
       ]
     }

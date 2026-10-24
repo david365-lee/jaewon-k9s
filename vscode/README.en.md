@@ -11,7 +11,7 @@ Improved and distributed for free by **jaewon**, a developer from South Korea.
 - Search and choose local or remote Kubernetes contexts from one picker.
 - Review each context's local/remote type, current-context status, cluster, and API endpoint in the list.
 - Launch the selected context in a new integrated terminal with `k9s --context <name>`.
-- Use dedicated terminal zoom-in, zoom-out, and reset commands. `Ctrl` + mouse-wheel zoom is enabled by default through `terminal.integrated.mouseWheelZoom`.
+- Scroll over the precise zoom control in the K9s sidebar to change the font size by 1px. Small deltas accumulate and rapid bursts are limited. Enter an exact size or use +/− and Reset. Native Ctrl+wheel zoom is disabled by default; if you explicitly enabled `terminal.integrated.mouseWheelZoom`, turn it off in Settings. Font size changes apply to all integrated terminals.
 - Configure executable paths for `kubectl` and K9s, an optional kubeconfig file, and the command timeout.
 - Localized command labels, settings, and prompts for Korean, English, Japanese, and Simplified Chinese.
 
@@ -51,7 +51,7 @@ k9s:
 
 ## Zoom behavior
 
-The zoom commands invoke VS Code's built-in integrated-terminal font zoom actions. `Ctrl` + mouse-wheel zoom is enabled by default by setting `terminal.integrated.mouseWheelZoom` to `true`. This setting applies to **all integrated terminals**, not just K9s. Turn it off in Settings if you prefer the explicit zoom commands only.
+Scroll over the precise zoom control in the K9s sidebar to change the font size by 1px. Small deltas accumulate and rapid bursts are limited. Enter an exact size or use +/− and Reset. Native Ctrl+wheel zoom is disabled by default; if you explicitly enabled `terminal.integrated.mouseWheelZoom`, turn it off in Settings. Font size changes apply to all integrated terminals.
 
 ## Settings
 
@@ -77,10 +77,10 @@ npm test
 npm run package
 ```
 
-The package command creates `jaewon-k9s-0.1.8.vsix`. Install it locally with:
+The package command creates `jaewon-k9s-0.1.9.vsix`. Install it locally with:
 
 ```powershell
-code --install-extension jaewon-k9s-0.1.8.vsix
+code --install-extension jaewon-k9s-0.1.9.vsix
 ```
 
 The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.png); [`icon.svg`](https://github.com/david365-lee/jaewon-k9s/blob/main/vscode/icon.svg) is its editable vector source. The same PNG can be used in the publisher's extension listing.
@@ -90,7 +90,7 @@ The VS Code package icon is the transparent 128×128 PNG at [`icon.png`](https:/
 Update the existing Marketplace listing through the publisher management page:
 
 1. Review the manifest, localized metadata, icon, translated READMEs, and `docs/marketplace-description.<locale>.md`.
-2. Build and test the VSIX. To set its filename explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.8.vsix`.
+2. Build and test the VSIX. To set its filename explicitly, use `npx @vscode/vsce package --out jaewon-k9s-0.1.9.vsix`.
 3. In Visual Studio Marketplace publisher management, select **Jaewon K9s → More Actions → Update**, then upload the VSIX.
 
 Update the existing `jaewon-k9s` listing rather than creating a new extension. The manifest and package include the icon and localized extension metadata.
