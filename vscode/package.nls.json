@@ -1,0 +1,13 @@
+{
+  "extension.displayName": "Jaewon K9s",
+  "extension.description": "Free K9s terminal for local and remote Kubernetes contexts in VS Code.",
+  "command.open": "Jaewon K9s: Open K9s for a Kubernetes Context",
+  "command.zoomIn": "Jaewon K9s: Increase Terminal Zoom",
+  "command.zoomOut": "Jaewon K9s: Decrease Terminal Zoom",
+  "command.zoomReset": "Jaewon K9s: Reset Terminal Zoom",
+  "settings.title": "Jaewon K9s",
+  "settings.kubectlPath": "Path to the kubectl executable used to list contexts.",
+  "settings.k9sPath": "Path to the K9s executable.",
+  "settings.kubeconfig": "Optional kubeconfig file path. Empty uses KUBECONFIG and the default user config.",
+  "settings.commandTimeout": "Timeout for kubectl context discovery and K9s version checks in milliseconds."
+}

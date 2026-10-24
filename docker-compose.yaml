@@ -1,0 +1,43 @@
+services:
+  extension-service:
+    image: ${DESKTOP_PLUGIN_IMAGE}
+    volumes:
+      - kubeconfig:/root/.kube:rw
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - --fail
+        - --silent
+        - --show-error
+        - --unix-socket
+        - /run/guest-services/jaewon-k9s.sock
+        - http://localhost/healthz
+      interval: 2s
+      retries: 30
+      start_period: 2s
+      timeout: 5s
+
+  k9s:
+    image: ${DESKTOP_PLUGIN_IMAGE}
+    entrypoint:
+      - /usr/bin/ttyd
+    command:
+      - --writable
+      - --port
+      - "7681"
+      - sh
+      - -c
+      - /usr/local/bin/k9s; exit 1
+    environment:
+      KUBECONFIG: /kubeconfig/config
+    volumes:
+      - kubeconfig:/kubeconfig:ro
+    ports:
+      - 127.0.0.1:${JAEWON_K9S_PORT:-35782}:7681
+    depends_on:
+      extension-service:
+        condition: service_healthy
+
+volumes:
+  kubeconfig:

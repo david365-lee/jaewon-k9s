@@ -1,0 +1,40 @@
+{
+  "icon": "jaewon-k9s.svg",
+  "vm": {
+    "composefile": "docker-compose.yaml",
+    "exposes": {
+      "socket": "jaewon-k9s.sock"
+    }
+  },
+  "ui": {
+    "dashboard-tab": {
+      "title": "Jaewon K9s",
+      "src": "index.html",
+      "root": "ui",
+      "backend": {
+        "socket": "jaewon-k9s.sock"
+      }
+    }
+  },
+  "host": {
+    "binaries": [
+      {
+        "darwin": [
+          {
+            "path": "/darwin/kubectl"
+          }
+        ],
+        "windows": [
+          {
+            "path": "/windows/kubectl.exe"
+          }
+        ],
+        "linux": [
+          {
+            "path": "/linux/kubectl"
+          }
+        ]
+      }
+    ]
+  }
+}

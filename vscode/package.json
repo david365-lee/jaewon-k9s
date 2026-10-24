@@ -1,0 +1,107 @@
+{
+  "name": "jaewon-k9s",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
+  "version": "0.1.0",
+  "publisher": "jaewon-lee",
+  "author": "jaewon",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/david365-lee/jaewon-k9s.git"
+  },
+  "homepage": "https://github.com/david365-lee/jaewon-k9s/tree/main/vscode",
+  "bugs": {
+    "url": "https://github.com/david365-lee/jaewon-k9s/issues"
+  },
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "k9s",
+    "kubernetes",
+    "kubectl",
+    "terminal",
+    "remote cluster"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onCommand:jaewonK9s.open",
+    "onCommand:jaewonK9s.zoomIn",
+    "onCommand:jaewonK9s.zoomOut",
+    "onCommand:jaewonK9s.zoomReset"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "jaewonK9s.open",
+        "title": "%command.open%",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "jaewonK9s.zoomIn",
+        "title": "%command.zoomIn%"
+      },
+      {
+        "command": "jaewonK9s.zoomOut",
+        "title": "%command.zoomOut%"
+      },
+      {
+        "command": "jaewonK9s.zoomReset",
+        "title": "%command.zoomReset%"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "jaewonK9s.open",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k"
+      }
+    ],
+    "configuration": {
+      "title": "%settings.title%",
+      "properties": {
+        "jaewonK9s.kubectlPath": {
+          "type": "string",
+          "default": "kubectl",
+          "scope": "machine",
+          "description": "%settings.kubectlPath%"
+        },
+        "jaewonK9s.k9sPath": {
+          "type": "string",
+          "default": "k9s",
+          "scope": "machine",
+          "description": "%settings.k9sPath%"
+        },
+        "jaewonK9s.kubeconfig": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "%settings.kubeconfig%"
+        },
+        "jaewonK9s.commandTimeout": {
+          "type": "number",
+          "default": 15000,
+          "minimum": 1000,
+          "maximum": 120000,
+          "scope": "machine",
+          "description": "%settings.commandTimeout%"
+        }
+      }
+    },
+    "configurationDefaults": {
+      "terminal.integrated.mouseWheelZoom": true
+    }
+  },
+  "scripts": {
+    "test": "node --test",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "3.6.2"
+  }
+}

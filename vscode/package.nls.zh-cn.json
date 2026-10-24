@@ -1,0 +1,13 @@
+{
+  "extension.displayName": "Jaewon K9s",
+  "extension.description": "在 VS Code 中选择本地或远程 Kubernetes 上下文并运行 K9s 的免费扩展。",
+  "command.open": "Jaewon K9s：为 Kubernetes 上下文打开 K9s",
+  "command.zoomIn": "Jaewon K9s：放大终端",
+  "command.zoomOut": "Jaewon K9s：缩小终端",
+  "command.zoomReset": "Jaewon K9s：重置终端缩放",
+  "settings.title": "Jaewon K9s",
+  "settings.kubectlPath": "用于列出上下文的 kubectl 可执行文件路径。",
+  "settings.k9sPath": "K9s 可执行文件路径。",
+  "settings.kubeconfig": "可选的 kubeconfig 文件路径。留空时使用 KUBECONFIG 和用户默认配置。",
+  "settings.commandTimeout": "kubectl 上下文发现和 K9s 版本检查超时时间（毫秒）。"
+}
