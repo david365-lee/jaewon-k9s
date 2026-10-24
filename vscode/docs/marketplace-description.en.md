@@ -2,7 +2,7 @@
 
 Jaewon K9s is a free extension that launches K9s in the VS Code integrated terminal and lets you select a local or remote Kubernetes context first. It is independently improved and distributed for free by jaewon, a developer from South Korea.
 
-## Version 0.1.7
+## Version 0.1.9
 
 On Windows, launches with a UTF-8 console and narrow ambiguous-character widths for intact borders, with full colors enabled by default. The README also explains the K9s `noIcons: true` option for hiding command and search prompt icons.
 
